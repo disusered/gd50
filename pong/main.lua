@@ -12,6 +12,11 @@ VIRTUAL_HEIGHT = 243
 
 -- Initialize LÖVE2D
 function love.load()
+	-- use nearest-neighbor filtering on upscaling and downscaling to prevent
+	-- blurring of text and graphics
+	love.graphics.setDefaultFilter("nearest", "nearest")
+
+	-- Set up screen with virtual resolution using push
 	push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
 		fullscreen = false,
 		resizable = false,
