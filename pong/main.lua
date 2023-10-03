@@ -41,3 +41,12 @@ function love.draw()
 	-- end rendering at virtual resolution
 	push:apply("end")
 end
+
+-- Add keyboard handling
+function love.keypressed(key)
+	-- keys can be accessed by string name
+	if key == "escape" then
+		-- function LÖVE gives us to terminate application
+		love.event.quit()
+	end
+end
