@@ -1,11 +1,18 @@
 -- GD50 2023 - Pong
 
+local push = require("push")
+
+-- Actual window size
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
+-- Virtual resolution dimensions
+VIRTUAL_WIDTH = 432
+VIRTUAL_HEIGHT = 243
+
 -- Initialize LÖVE2D
 function love.load()
-	love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT, {
+	push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
 		fullscreen = false,
 		resizable = false,
 		vsync = true,
