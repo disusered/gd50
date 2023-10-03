@@ -21,11 +21,18 @@ end
 
 -- Called after update by LÖVE2D, used to draw anything to the screen, updated or otherwise.
 function love.draw()
+	-- begin rendering at virtual resolution
+	push:apply("start")
+
+	-- print "Hello Pong!" at the middle of the screen
 	love.graphics.printf(
 		"Hello Pong", -- text to render
 		0, -- starting X (0 since we're going to center it based on width)
-		WINDOW_HEIGHT / 2 - 6, -- starting Y (halfway down the screen)
-		WINDOW_WIDTH, -- number of pixels to center within (the entire screen here)
+		VIRTUAL_HEIGHT / 2 - 6, -- starting Y (halfway down the virtual screen)
+		VIRTUAL_WIDTH, -- number of pixels to center within (the entire virtual screen here)
 		"center" -- alignment mode, can be 'center', 'left', or 'right'
 	)
+
+	-- end rendering at virtual resolution
+	push:apply("end")
 end
