@@ -27,6 +27,9 @@ function love.load()
 	-- blurring of text and graphics
 	love.graphics.setDefaultFilter("nearest", "nearest")
 
+	-- set the title of our application window
+	love.window.setTitle("Pong")
+
 	-- seed the rng
 	math.randomseed(os.time())
 
