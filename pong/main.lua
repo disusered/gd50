@@ -20,13 +20,13 @@ function love.load()
 	love.graphics.setDefaultFilter("nearest", "nearest")
 
 	-- load small "retro" font
-	SMALL_FONT = love.graphics.newFont("font.ttf", 8)
+	SmallFont = love.graphics.newFont("font.ttf", 8)
 
 	-- larger font for drawing the score on the screen
-	SCORE_FONT = love.graphics.newFont("font.ttf", 32)
+	ScoreFont = love.graphics.newFont("font.ttf", 32)
 
 	-- set LÖVE2D's active font to the smallFont object
-	love.graphics.setFont(SMALL_FONT)
+	love.graphics.setFont(SmallFont)
 
 	-- Set up screen with virtual resolution using push
 	push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -36,28 +36,28 @@ function love.load()
 	})
 
 	-- initialize score variables
-	P1_SCORE = 0
-	P2_SCORE = 0
+	P1Score = 0
+	P2Score = 0
 
 	-- paddle positions on the Y axis (they can only move up or down)
-	P1_Y = 30
-	P2_Y = VIRTUAL_HEIGHT - 50
+	P1y = 30
+	P2y = VIRTUAL_HEIGHT - 50
 end
 
 -- runs every frame with `dt`, our delta in seconds since the last frame
 function love.update(dt)
 	-- Player 1 movement
 	if love.keyboard.isDown("w") then
-		P1_Y = P1_Y + -PADDLE_SPEED * dt
+		P1y = P1y + -PADDLE_SPEED * dt
 	elseif love.keyboard.isDown("s") then
-		P1_Y = P1_Y + PADDLE_SPEED * dt
+		P1y = P1y + PADDLE_SPEED * dt
 	end
 
 	-- Player 2 movement
 	if love.keyboard.isDown("up") then
-		P2_Y = P2_Y + -PADDLE_SPEED * dt
+		P2y = P2y + -PADDLE_SPEED * dt
 	elseif love.keyboard.isDown("down") then
-		P2_Y = P2_Y + PADDLE_SPEED * dt
+		P2y = P2y + PADDLE_SPEED * dt
 	end
 end
 
@@ -79,19 +79,19 @@ function love.draw()
 	love.graphics.clear(40 / 255, 45 / 255, 52 / 255, 255 / 255)
 
 	-- print "Hello Pong!" at the middle of the screen
-	love.graphics.setFont(SMALL_FONT)
+	love.graphics.setFont(SmallFont)
 	love.graphics.printf("Hello Pong", 0, 20, VIRTUAL_WIDTH, "center")
 
 	-- draw score on the left and right center of the screen
-	love.graphics.setFont(SCORE_FONT)
-	love.graphics.print(tostring(P1_SCORE), VIRTUAL_WIDTH / 2 - 50, VIRTUAL_HEIGHT / 3)
-	love.graphics.print(tostring(P2_SCORE), VIRTUAL_WIDTH / 2 + 30, VIRTUAL_HEIGHT / 3)
+	love.graphics.setFont(ScoreFont)
+	love.graphics.print(tostring(P1Score), VIRTUAL_WIDTH / 2 - 50, VIRTUAL_HEIGHT / 3)
+	love.graphics.print(tostring(P2Score), VIRTUAL_WIDTH / 2 + 30, VIRTUAL_HEIGHT / 3)
 
 	-- render first paddle
-	love.graphics.rectangle("fill", 10, P1_Y, 5, 20)
+	love.graphics.rectangle("fill", 10, P1y, 5, 20)
 
 	-- render second paddle
-	love.graphics.rectangle("fill", VIRTUAL_WIDTH - 10, P2_Y, 5, 20)
+	love.graphics.rectangle("fill", VIRTUAL_WIDTH - 10, P2y, 5, 20)
 
 	-- render ball
 	love.graphics.rectangle("fill", VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 4, 4)
