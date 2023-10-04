@@ -114,7 +114,11 @@ function love.draw()
 
 	-- print "Hello Pong!" at the middle of the screen
 	love.graphics.setFont(SmallFont)
-	love.graphics.printf("Hello Pong", 0, 20, VIRTUAL_WIDTH, "center")
+	if GameState == "start" then
+		love.graphics.printf("Hello Start State!", 0, 20, VIRTUAL_WIDTH, "center")
+	else
+		love.graphics.printf("Hello Play State!", 0, 20, VIRTUAL_WIDTH, "center")
+	end
 
 	-- draw score on the left and right center of the screen
 	love.graphics.setFont(ScoreFont)
