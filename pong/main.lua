@@ -73,6 +73,13 @@ function love.update(dt)
 	elseif love.keyboard.isDown("s") then
 		P1_Y = P1_Y + PADDLE_SPEED * dt
 	end
+
+	-- Player 2 movement
+	if love.keyboard.isDown("up") then
+		P2_Y = P2_Y + -PADDLE_SPEED * dt
+	elseif love.keyboard.isDown("down") then
+		P2_Y = P2_Y + PADDLE_SPEED * dt
+	end
 end
 
 -- Add keyboard handling
