@@ -45,6 +45,16 @@ function love.load()
 	-- paddle positions on the Y axis (they can only move up or down)
 	P1y = 30
 	P2y = VIRTUAL_HEIGHT - 50
+
+	-- velocity and position variables for our ball when play starts
+	BallX = VIRTUAL_WIDTH / 2 - 2
+	BallY = VIRTUAL_HEIGHT / 2 - 2
+
+	BallDx = math.random(2) == 1 and 100 or -100
+	BallDy = math.random(-50, 50)
+
+	-- game state variable used to transition between different parts of the game
+	GameState = "start"
 end
 
 -- runs every frame with `dt`, our delta in seconds since the last frame
@@ -97,7 +107,7 @@ function love.draw()
 	love.graphics.rectangle("fill", VIRTUAL_WIDTH - 10, P2y, 5, 20)
 
 	-- render ball
-	love.graphics.rectangle("fill", VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 4, 4)
+	love.graphics.rectangle("fill", BallX, BallY, 4, 4)
 
 	-- end rendering at virtual resolution
 	push:apply("end")
