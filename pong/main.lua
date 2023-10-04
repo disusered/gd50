@@ -65,6 +65,16 @@ function love.draw()
 	push:apply("end")
 end
 
+-- runs every frame with `dt`, our delta in seconds since the last frame
+function love.update(dt)
+	-- Player 1 movement
+	if love.keyboard.isDown("w") then
+		P1_Y = P1_Y + -PADDLE_SPEED * dt
+	elseif love.keyboard.isDown("s") then
+		P1_Y = P1_Y + PADDLE_SPEED * dt
+	end
+end
+
 -- Add keyboard handling
 function love.keypressed(key)
 	-- keys can be accessed by string name
