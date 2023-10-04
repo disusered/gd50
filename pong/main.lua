@@ -19,6 +19,9 @@ function love.load()
 	-- blurring of text and graphics
 	love.graphics.setDefaultFilter("nearest", "nearest")
 
+	-- seed the rng
+	math.randomseed(os.time())
+
 	-- load small "retro" font
 	SmallFont = love.graphics.newFont("font.ttf", 8)
 
