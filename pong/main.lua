@@ -82,6 +82,11 @@ function love.draw()
 	love.graphics.setFont(SMALL_FONT)
 	love.graphics.printf("Hello Pong", 0, 20, VIRTUAL_WIDTH, "center")
 
+	-- draw score on the left and right center of the screen
+	love.graphics.setFont(SCORE_FONT)
+	love.graphics.print(tostring(P1_SCORE), VIRTUAL_WIDTH / 2 - 50, VIRTUAL_HEIGHT / 3)
+	love.graphics.print(tostring(P2_SCORE), VIRTUAL_WIDTH / 2 + 30, VIRTUAL_HEIGHT / 3)
+
 	-- render first paddle
 	love.graphics.rectangle("fill", 10, P1_Y, 5, 20)
 
