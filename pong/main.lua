@@ -47,16 +47,16 @@ end
 -- runs every frame with `dt`, our delta in seconds since the last frame
 function love.update(dt)
 	-- Player 1 movement
-	if love.keyboard.isDown("w") then
+	if love.keyboard.isDown("w") and P1y > 0 then
 		P1y = P1y + -PADDLE_SPEED * dt
-	elseif love.keyboard.isDown("s") then
+	elseif love.keyboard.isDown("s") and P1y < VIRTUAL_HEIGHT - 20 then
 		P1y = P1y + PADDLE_SPEED * dt
 	end
 
 	-- Player 2 movement
-	if love.keyboard.isDown("up") then
+	if love.keyboard.isDown("up") and P2y > 0 then
 		P2y = P2y + -PADDLE_SPEED * dt
-	elseif love.keyboard.isDown("down") then
+	elseif love.keyboard.isDown("down") and P2y < VIRTUAL_HEIGHT - 20 then
 		P2y = P2y + PADDLE_SPEED * dt
 	end
 end
