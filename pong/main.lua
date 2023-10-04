@@ -16,6 +16,12 @@ function love.load()
 	-- blurring of text and graphics
 	love.graphics.setDefaultFilter("nearest", "nearest")
 
+	-- load "retro" font
+	local smallFont = love.graphics.newFont("font.ttf", 8)
+
+	-- set LÖVE2D's active font to the smallFont object
+	love.graphics.setFont(smallFont)
+
 	-- Set up screen with virtual resolution using push
 	push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
 		fullscreen = false,
