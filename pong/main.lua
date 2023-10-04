@@ -137,6 +137,16 @@ function love.draw()
 	-- render ball
 	GameBall:render()
 
+	-- render FPS
+	displayFPS()
+
 	-- end rendering at virtual resolution
 	push:apply("end")
+end
+
+-- simple FPS display across all states
+function displayFPS()
+	love.graphics.setFont(SmallFont)
+	love.graphics.setColor(0, 255 / 255, 0, 255 / 255)
+	love.graphics.print("FPS: " .. tostring(love.timer.getFPS()), 10, 10)
 end
