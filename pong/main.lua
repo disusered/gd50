@@ -93,6 +93,9 @@ function love.draw()
 	-- render second paddle
 	love.graphics.rectangle("fill", VIRTUAL_WIDTH - 10, P2_Y, 5, 20)
 
+	-- render ball
+	love.graphics.rectangle("fill", VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 4, 4)
+
 	-- end rendering at virtual resolution
 	push:apply("end")
 end
