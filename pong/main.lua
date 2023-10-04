@@ -1,6 +1,13 @@
 -- GD50 2023 - Pong
 
+-- Add a class library
+Class = require("class")
+
+-- Add a library for "retro" style visuals
 local push = require("push")
+
+-- Load the Paddle class
+require("Paddle")
 
 -- Actual window size
 WINDOW_WIDTH = 1280
@@ -38,13 +45,13 @@ function love.load()
 		vsync = true,
 	})
 
+	-- initialize our player paddles
+	Player1 = Paddle(10, 30, 5, 20)
+	Player2 = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 30, 5, 20)
+
 	-- initialize score variables
 	P1Score = 0
 	P2Score = 0
-
-	-- paddle positions on the Y axis (they can only move up or down)
-	P1y = 30
-	P2y = VIRTUAL_HEIGHT - 50
 
 	-- velocity and position variables for our ball when play starts
 	BallX = VIRTUAL_WIDTH / 2 - 2
@@ -59,18 +66,18 @@ end
 
 -- runs every frame with `dt`, our delta in seconds since the last frame
 function love.update(dt)
-	-- Player 1 movement
+	-- player 1 movement
 	if love.keyboard.isDown("w") then
-		P1y = math.max(0, P1y + -PADDLE_SPEED * dt)
+		Player1.dy = -PADDLE_SPEED
 	elseif love.keyboard.isDown("s") then
-		P1y = math.min(VIRTUAL_HEIGHT - 20, P1y + PADDLE_SPEED * dt)
+		Player1.dy = PADDLE_SPEED
 	end
 
-	-- Player 2 movement
-	if love.keyboard.isDown("up") and P2y > 0 then
-		P2y = math.max(0, P2y + -PADDLE_SPEED * dt)
+	-- player 2 movement
+	if love.keyboard.isDown("up") then
+		Player2.dy = -PADDLE_SPEED
 	elseif love.keyboard.isDown("down") then
-		P2y = math.min(VIRTUAL_HEIGHT - 20, P2y + PADDLE_SPEED * dt)
+		Player2.dy = PADDLE_SPEED
 	end
 
 	-- update our ball based on its DX and DY only if we're in play state;
@@ -78,6 +85,10 @@ function love.update(dt)
 		BallX = BallX + BallDx * dt
 		BallY = BallY + BallDy * dt
 	end
+
+	-- update values in class with delta
+	Player1:update(dt)
+	Player2:update(dt)
 end
 
 -- Add keyboard handling
@@ -125,11 +136,9 @@ function love.draw()
 	love.graphics.print(tostring(P1Score), VIRTUAL_WIDTH / 2 - 50, VIRTUAL_HEIGHT / 3)
 	love.graphics.print(tostring(P2Score), VIRTUAL_WIDTH / 2 + 30, VIRTUAL_HEIGHT / 3)
 
-	-- render first paddle
-	love.graphics.rectangle("fill", 10, P1y, 5, 20)
-
-	-- render second paddle
-	love.graphics.rectangle("fill", VIRTUAL_WIDTH - 10, P2y, 5, 20)
+	-- render paddles
+	Player1:render()
+	Player2:render()
 
 	-- render ball
 	love.graphics.rectangle("fill", BallX, BallY, 4, 4)
