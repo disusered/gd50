@@ -72,6 +72,12 @@ function love.update(dt)
 	elseif love.keyboard.isDown("down") then
 		P2y = math.min(VIRTUAL_HEIGHT - 20, P2y + PADDLE_SPEED * dt)
 	end
+
+	-- update our ball based on its DX and DY only if we're in play state;
+	if GameState == "play" then
+		BallX = BallX + BallDx * dt
+		BallY = BallY + BallDy * dt
+	end
 end
 
 -- Add keyboard handling
@@ -80,6 +86,21 @@ function love.keypressed(key)
 	if key == "escape" then
 		-- function LÖVE gives us to terminate application
 		love.event.quit()
+	-- if we press enter during the start state of the game, we'll go into play mode
+	elseif key == "enter" or key == "return" then
+		if GameState == "start" then
+			GameState = "play"
+		else
+			GameState = "start"
+
+			-- velocity and position variables for our ball when play starts
+			BallX = VIRTUAL_WIDTH / 2 - 2
+			BallY = VIRTUAL_HEIGHT / 2 - 2
+
+			-- give ball's x and y velocity a random starting value
+			BallDx = math.random(2) == 1 and 100 or -100
+			BallDy = math.random(-50, 50) * 1.5
+		end
 	end
 end
 
