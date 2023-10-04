@@ -10,6 +10,9 @@ WINDOW_HEIGHT = 720
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
+-- Speed at which we will move our paddle; multiplied by dt in update
+PADDLE_SPEED = 200
+
 -- Initialize LÖVE2D
 function love.load()
 	-- use nearest-neighbor filtering on upscaling and downscaling to prevent
@@ -18,8 +21,6 @@ function love.load()
 
 	-- load "retro" font
 	local smallFont = love.graphics.newFont("font.ttf", 8)
-
-	-- set LÖVE2D's active font to the smallFont object
 	love.graphics.setFont(smallFont)
 
 	-- Set up screen with virtual resolution using push
@@ -35,14 +36,17 @@ function love.draw()
 	-- begin rendering at virtual resolution
 	push:apply("start")
 
+	-- clear the screen with a color similar to some versions of the original Pong
+	love.graphics.clear(40 / 255, 45 / 255, 52 / 255, 255 / 255)
+
 	-- print "Hello Pong!" at the middle of the screen
-	love.graphics.printf(
-		"Hello Pong", -- text to render
-		0, -- starting X (0 since we're going to center it based on width)
-		VIRTUAL_HEIGHT / 2 - 6, -- starting Y (halfway down the virtual screen)
-		VIRTUAL_WIDTH, -- number of pixels to center within (the entire virtual screen here)
-		"center" -- alignment mode, can be 'center', 'left', or 'right'
-	)
+	love.graphics.printf("Hello Pong", 0, 20, VIRTUAL_WIDTH, "center")
+
+	-- render first paddle
+	love.graphics.rectangle("fill", 10, 30, 5, 20)
+
+	-- render second paddle
+	love.graphics.rectangle("fill", VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 50, 5, 20)
 
 	-- end rendering at virtual resolution
 	push:apply("end")
