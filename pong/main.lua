@@ -20,13 +20,13 @@ function love.load()
 	love.graphics.setDefaultFilter("nearest", "nearest")
 
 	-- load small "retro" font
-	local smallFont = love.graphics.newFont("font.ttf", 8)
+	SMALL_FONT = love.graphics.newFont("font.ttf", 8)
 
 	-- larger font for drawing the score on the screen
-	local scoreFont = love.graphics.newFont("font.ttf", 32)
+	SCORE_FONT = love.graphics.newFont("font.ttf", 32)
 
 	-- set LÖVE2D's active font to the smallFont object
-	love.graphics.setFont(smallFont)
+	love.graphics.setFont(SMALL_FONT)
 
 	-- Set up screen with virtual resolution using push
 	push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -79,6 +79,7 @@ function love.draw()
 	love.graphics.clear(40 / 255, 45 / 255, 52 / 255, 255 / 255)
 
 	-- print "Hello Pong!" at the middle of the screen
+	love.graphics.setFont(SMALL_FONT)
 	love.graphics.printf("Hello Pong", 0, 20, VIRTUAL_WIDTH, "center")
 
 	-- render first paddle
