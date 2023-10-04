@@ -6,8 +6,9 @@ Class = require("class")
 -- Add a library for "retro" style visuals
 local push = require("push")
 
--- Load the Paddle class
+-- Load the classes
 require("Paddle")
+require("Ball")
 
 -- Actual window size
 WINDOW_WIDTH = 1280
@@ -49,16 +50,12 @@ function love.load()
 	Player1 = Paddle(10, 30, 5, 20)
 	Player2 = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 30, 5, 20)
 
+	-- initialize the ball
+	GameBall = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 4, 4)
+
 	-- initialize score variables
 	P1Score = 0
 	P2Score = 0
-
-	-- velocity and position variables for our ball when play starts
-	BallX = VIRTUAL_WIDTH / 2 - 2
-	BallY = VIRTUAL_HEIGHT / 2 - 2
-
-	BallDx = math.random(2) == 1 and 100 or -100
-	BallDy = math.random(-50, 50)
 
 	-- game state variable used to transition between different parts of the game
 	GameState = "start"
@@ -82,8 +79,7 @@ function love.update(dt)
 
 	-- update our ball based on its DX and DY only if we're in play state;
 	if GameState == "play" then
-		BallX = BallX + BallDx * dt
-		BallY = BallY + BallDy * dt
+		GameBall:update(dt)
 	end
 
 	-- update values in class with delta
@@ -105,12 +101,7 @@ function love.keypressed(key)
 			GameState = "start"
 
 			-- velocity and position variables for our ball when play starts
-			BallX = VIRTUAL_WIDTH / 2 - 2
-			BallY = VIRTUAL_HEIGHT / 2 - 2
-
-			-- give ball's x and y velocity a random starting value
-			BallDx = math.random(2) == 1 and 100 or -100
-			BallDy = math.random(-50, 50) * 1.5
+			GameBall:reset()
 		end
 	end
 end
@@ -141,7 +132,7 @@ function love.draw()
 	Player2:render()
 
 	-- render ball
-	love.graphics.rectangle("fill", BallX, BallY, 4, 4)
+	GameBall:render()
 
 	-- end rendering at virtual resolution
 	push:apply("end")
