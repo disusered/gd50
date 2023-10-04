@@ -19,8 +19,13 @@ function love.load()
 	-- blurring of text and graphics
 	love.graphics.setDefaultFilter("nearest", "nearest")
 
-	-- load "retro" font
+	-- load small "retro" font
 	local smallFont = love.graphics.newFont("font.ttf", 8)
+
+	-- larger font for drawing the score on the screen
+	local scoreFont = love.graphics.newFont("font.ttf", 32)
+
+	-- set LÖVE2D's active font to the smallFont object
 	love.graphics.setFont(smallFont)
 
 	-- Set up screen with virtual resolution using push
@@ -29,6 +34,14 @@ function love.load()
 		resizable = false,
 		vsync = true,
 	})
+
+	-- initialize score variables
+	P1_SCORE = 0
+	P2_SCORE = 0
+
+	-- paddle positions on the Y axis (they can only move up or down)
+	P1_Y = 30
+	P2_Y = VIRTUAL_HEIGHT - 50
 end
 
 -- Called after update by LÖVE2D, used to draw anything to the screen, updated or otherwise.
@@ -43,10 +56,10 @@ function love.draw()
 	love.graphics.printf("Hello Pong", 0, 20, VIRTUAL_WIDTH, "center")
 
 	-- render first paddle
-	love.graphics.rectangle("fill", 10, 30, 5, 20)
+	love.graphics.rectangle("fill", 10, P1_Y, 5, 20)
 
 	-- render second paddle
-	love.graphics.rectangle("fill", VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 50, 5, 20)
+	love.graphics.rectangle("fill", VIRTUAL_WIDTH - 10, P2_Y, 5, 20)
 
 	-- end rendering at virtual resolution
 	push:apply("end")
