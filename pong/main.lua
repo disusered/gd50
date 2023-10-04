@@ -44,27 +44,6 @@ function love.load()
 	P2_Y = VIRTUAL_HEIGHT - 50
 end
 
--- Called after update by LÖVE2D, used to draw anything to the screen, updated or otherwise.
-function love.draw()
-	-- begin rendering at virtual resolution
-	push:apply("start")
-
-	-- clear the screen with a color similar to some versions of the original Pong
-	love.graphics.clear(40 / 255, 45 / 255, 52 / 255, 255 / 255)
-
-	-- print "Hello Pong!" at the middle of the screen
-	love.graphics.printf("Hello Pong", 0, 20, VIRTUAL_WIDTH, "center")
-
-	-- render first paddle
-	love.graphics.rectangle("fill", 10, P1_Y, 5, 20)
-
-	-- render second paddle
-	love.graphics.rectangle("fill", VIRTUAL_WIDTH - 10, P2_Y, 5, 20)
-
-	-- end rendering at virtual resolution
-	push:apply("end")
-end
-
 -- runs every frame with `dt`, our delta in seconds since the last frame
 function love.update(dt)
 	-- Player 1 movement
@@ -89,4 +68,25 @@ function love.keypressed(key)
 		-- function LÖVE gives us to terminate application
 		love.event.quit()
 	end
+end
+
+-- Called after update by LÖVE2D, used to draw anything to the screen, updated or otherwise.
+function love.draw()
+	-- begin rendering at virtual resolution
+	push:apply("start")
+
+	-- clear the screen with a color similar to some versions of the original Pong
+	love.graphics.clear(40 / 255, 45 / 255, 52 / 255, 255 / 255)
+
+	-- print "Hello Pong!" at the middle of the screen
+	love.graphics.printf("Hello Pong", 0, 20, VIRTUAL_WIDTH, "center")
+
+	-- render first paddle
+	love.graphics.rectangle("fill", 10, P1_Y, 5, 20)
+
+	-- render second paddle
+	love.graphics.rectangle("fill", VIRTUAL_WIDTH - 10, P2_Y, 5, 20)
+
+	-- end rendering at virtual resolution
+	push:apply("end")
 end
