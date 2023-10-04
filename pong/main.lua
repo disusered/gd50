@@ -71,6 +71,8 @@ function love.update(dt)
 		Player1.dy = -PADDLE_SPEED
 	elseif love.keyboard.isDown("s") then
 		Player1.dy = PADDLE_SPEED
+	else
+		Player1.dy = 0
 	end
 
 	-- player 2 movement
@@ -78,6 +80,8 @@ function love.update(dt)
 		Player2.dy = -PADDLE_SPEED
 	elseif love.keyboard.isDown("down") then
 		Player2.dy = PADDLE_SPEED
+	else
+		Player2.dy = 0
 	end
 
 	-- update our ball based on its DX and DY only if we're in play state;
