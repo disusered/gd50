@@ -154,6 +154,7 @@ function love.update(dt)
 		if GameBall.x < 0 then
 			ServingPlayer = 1
 			P2Score = P2Score + 1
+			Sounds["score"]:play()
 
 			-- if we've reached a score of 10, the game is over
 			if P2Score == MAX_SCORE then
@@ -168,6 +169,7 @@ function love.update(dt)
 		if GameBall.x > VIRTUAL_WIDTH then
 			ServingPlayer = 2
 			P1Score = P1Score + 1
+			Sounds["score"]:play()
 
 			-- if we've reached a score of 10, the game is over
 			if P1Score == MAX_SCORE then
