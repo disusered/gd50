@@ -55,7 +55,7 @@ function love.load()
 	-- Set up screen with virtual resolution using push
 	push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
 		fullscreen = false,
-		resizable = false,
+		resizable = true,
 		vsync = true,
 	})
 
@@ -75,6 +75,11 @@ function love.load()
 
 	-- game state variable used to transition between different parts of the game
 	GameState = "start"
+end
+
+-- Called by LÖVE2D whenever we resize the screen
+function love.resize(w, h)
+	push:resize(w, h)
 end
 
 -- runs every frame with `dt`, our delta in seconds since the last frame
