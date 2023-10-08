@@ -21,6 +21,9 @@ VIRTUAL_HEIGHT = 243
 -- Speed at which we will move our paddle; multiplied by dt in update
 PADDLE_SPEED = 200
 
+-- Score needed to win
+MAX_SCORE = 10
+
 -- Initialize LÖVE2D
 function love.load()
 	-- use nearest-neighbor filtering on upscaling and downscaling to prevent
@@ -35,6 +38,9 @@ function love.load()
 
 	-- load small "retro" font
 	SmallFont = love.graphics.newFont("font.ttf", 8)
+
+	-- load large font for win message
+	LargeFont = love.graphics.newFont("font.ttf", 16)
 
 	-- larger font for drawing the score on the screen
 	ScoreFont = love.graphics.newFont("font.ttf", 32)
@@ -138,15 +144,29 @@ function love.update(dt)
 		if GameBall.x < 0 then
 			ServingPlayer = 1
 			P2Score = P2Score + 1
-			GameBall:reset()
-			GameState = "start"
+
+			-- if we've reached a score of 10, the game is over
+			if P2Score == MAX_SCORE then
+				WinningPlayer = 2
+				GameState = "done"
+			else
+				GameState = "serve"
+				GameBall:reset()
+			end
 		end
 
 		if GameBall.x > VIRTUAL_WIDTH then
 			ServingPlayer = 2
 			P1Score = P1Score + 1
-			GameBall:reset()
-			GameState = "start"
+
+			-- if we've reached a score of 10, the game is over
+			if P1Score == MAX_SCORE then
+				WinningPlayer = 1
+				GameState = "done"
+			else
+				GameState = "serve"
+				GameBall:reset()
+			end
 		end
 
 		GameBall:update(dt)
@@ -169,6 +189,22 @@ function love.keypressed(key)
 			GameState = "serve"
 		elseif GameState == "serve" then
 			GameState = "play"
+		elseif GameState == "done" then
+			-- game is simply in a restart phase here, but will set the serving player
+			-- to the oppoonent of whomever won
+			GameState = "serve"
+			GameBall:reset()
+
+			-- reset scores to 0
+			P1Score = 0
+			P2Score = 0
+
+			-- decide serving player as the opposite of who won
+			if WinningPlayer == 1 then
+				ServingPlayer = 2
+			else
+				ServingPlayer = 1
+			end
 		end
 	end
 end
@@ -182,13 +218,21 @@ function love.draw()
 	love.graphics.clear(40 / 255, 45 / 255, 52 / 255, 255 / 255)
 
 	-- print "Hello Pong!" at the middle of the screen
-	love.graphics.setFont(SmallFont)
 	if GameState == "start" then
+		love.graphics.setFont(SmallFont)
 		love.graphics.printf("Welcome to Pong!", 0, 10, VIRTUAL_WIDTH, "center")
 		love.graphics.printf("Press Enter to begin!", 0, 20, VIRTUAL_WIDTH, "center")
-	else
+	elseif GameState == "serve" then
+		love.graphics.setFont(SmallFont)
 		love.graphics.printf("Player " .. tostring(ServingPlayer) .. "'s serve!", 0, 10, VIRTUAL_WIDTH, "center")
 		love.graphics.printf("Press Enter to serve!", 0, 20, VIRTUAL_WIDTH, "center")
+	elseif GameState == "play" then
+	-- no UI messages to display in play
+	elseif GameState == "done" then
+		love.graphics.setFont(LargeFont)
+		love.graphics.printf("Player " .. tostring(WinningPlayer) .. " wins!", 0, 10, VIRTUAL_WIDTH, "center")
+		love.graphics.setFont(SmallFont)
+		love.graphics.printf("Press Enter to restart!", 0, 30, VIRTUAL_WIDTH, "center")
 	end
 
 	-- draw score on the left and right center of the screen
