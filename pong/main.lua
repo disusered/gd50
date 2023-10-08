@@ -36,14 +36,18 @@ function love.load()
 	-- seed the rng
 	math.randomseed(os.time())
 
-	-- load small "retro" font
+	-- load "retro" fonts
 	SmallFont = love.graphics.newFont("font.ttf", 8)
-
-	-- load large font for win message
 	LargeFont = love.graphics.newFont("font.ttf", 16)
-
-	-- larger font for drawing the score on the screen
 	ScoreFont = love.graphics.newFont("font.ttf", 32)
+
+	-- set up our sound effects; later, we can just index this table and
+	-- call each entry's `play` method
+	Sounds = {
+		["paddle_hit"] = love.audio.newSource("sounds/paddle_hit.wav", "static"),
+		["score"] = love.audio.newSource("sounds/score.wav", "static"),
+		["wall_hit"] = love.audio.newSource("sounds/wall_hit.wav", "static"),
+	}
 
 	-- set LÖVE2D's active font to the smallFont object
 	love.graphics.setFont(SmallFont)
@@ -115,6 +119,8 @@ function love.update(dt)
 			else
 				GameBall.dy = math.random(10, 150)
 			end
+
+			Sounds["paddle_hit"]:play()
 		end
 
 		if GameBall:collides(Player2) then
@@ -126,6 +132,8 @@ function love.update(dt)
 			else
 				GameBall.dy = math.random(10, 150)
 			end
+
+			Sounds["paddle_hit"]:play()
 		end
 
 		-- detect upper and lower screen boundry collision and reverse if collided
