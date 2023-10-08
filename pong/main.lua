@@ -60,6 +60,9 @@ function love.load()
 	P1Score = 0
 	P2Score = 0
 
+	-- player who last scored serves the ball
+	ServingPlayer = 1
+
 	-- game state variable used to transition between different parts of the game
 	GameState = "start"
 end
@@ -84,8 +87,16 @@ function love.update(dt)
 		Player2.dy = 0
 	end
 
-	-- update our ball based on its DX and DY only if we're in play state;
-	if GameState == "play" then
+	if GameState == "serve" then
+		-- before switching to play, initialize ball's velocity based on player who
+		-- last scored
+		GameBall.dy = math.random(-50, 50)
+		if ServingPlayer == 1 then
+			GameBall.dx = math.random(140, 200)
+		else
+			GameBall.dx = -math.random(140, 200)
+		end
+	elseif GameState == "play" then
 		-- detect ball collision with paddles, reversing dx if true and slightly
 		-- increasing it, then altering the dy based on the position of collision
 		if GameBall:collides(Player1) then
@@ -155,12 +166,9 @@ function love.keypressed(key)
 	-- if we press enter during the start state of the game, we'll go into play mode
 	elseif key == "enter" or key == "return" then
 		if GameState == "start" then
+			GameState = "serve"
+		elseif GameState == "serve" then
 			GameState = "play"
-		else
-			GameState = "start"
-
-			-- velocity and position variables for our ball when play starts
-			GameBall:reset()
 		end
 	end
 end
@@ -176,9 +184,11 @@ function love.draw()
 	-- print "Hello Pong!" at the middle of the screen
 	love.graphics.setFont(SmallFont)
 	if GameState == "start" then
-		love.graphics.printf("Hello Start State!", 0, 20, VIRTUAL_WIDTH, "center")
+		love.graphics.printf("Welcome to Pong!", 0, 10, VIRTUAL_WIDTH, "center")
+		love.graphics.printf("Press Enter to begin!", 0, 20, VIRTUAL_WIDTH, "center")
 	else
-		love.graphics.printf("Hello Play State!", 0, 20, VIRTUAL_WIDTH, "center")
+		love.graphics.printf("Player " .. tostring(ServingPlayer) .. "'s serve!", 0, 10, VIRTUAL_WIDTH, "center")
+		love.graphics.printf("Press Enter to serve!", 0, 20, VIRTUAL_WIDTH, "center")
 	end
 
 	-- draw score on the left and right center of the screen
