@@ -86,6 +86,31 @@ function love.update(dt)
 
 	-- update our ball based on its DX and DY only if we're in play state;
 	if GameState == "play" then
+		-- detect ball collision with paddles, reversing dx if true and slightly
+		-- increasing it, then altering the dy based on the position of collision
+		if GameBall:collides(Player1) then
+			GameBall.dx = -GameBall.dx * 1.03
+			GameBall.x = Player1.x + 5
+
+			-- keep velocity going in the same direction but randomize it
+			if GameBall.dy < 0 then
+				GameBall.dy = -math.random(10, 150)
+			else
+				GameBall.dy = math.random(10, 150)
+			end
+		end
+
+		if GameBall:collides(Player2) then
+			GameBall.dx = -GameBall.dx * 1.03
+			GameBall.x = Player2.x - 4
+			-- keep velocity going in the same direction but randomize it
+			if GameBall.dy < 0 then
+				GameBall.dy = -math.random(10, 150)
+			else
+				GameBall.dy = math.random(10, 150)
+			end
+		end
+
 		GameBall:update(dt)
 	end
 
