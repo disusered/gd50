@@ -111,6 +111,18 @@ function love.update(dt)
 			end
 		end
 
+		-- detect upper and lower screen boundry collision and reverse if collided
+		if GameBall.y <= 0 then
+			GameBall.y = 0
+			GameBall.dy = -GameBall.dy
+		end
+
+		-- -4 to account for the ball's size
+		if GameBall.y >= VIRTUAL_HEIGHT - 4 then
+			GameBall.y = VIRTUAL_HEIGHT - 4
+			GameBall.dy = -GameBall.dy
+		end
+
 		GameBall:update(dt)
 	end
 
