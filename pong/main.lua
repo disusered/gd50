@@ -140,12 +140,14 @@ function love.update(dt)
 		if GameBall.y <= 0 then
 			GameBall.y = 0
 			GameBall.dy = -GameBall.dy
+			Sounds["wall_hit"]:play()
 		end
 
 		-- -4 to account for the ball's size
 		if GameBall.y >= VIRTUAL_HEIGHT - 4 then
 			GameBall.y = VIRTUAL_HEIGHT - 4
 			GameBall.dy = -GameBall.dy
+			Sounds["wall_hit"]:play()
 		end
 
 		-- detect left and right edge of the screen and reset if collided
