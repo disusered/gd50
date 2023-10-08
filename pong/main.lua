@@ -57,6 +57,7 @@ function love.load()
 		fullscreen = false,
 		resizable = true,
 		vsync = true,
+		canvas = false,
 	})
 
 	-- initialize our player paddles
@@ -73,7 +74,15 @@ function love.load()
 	-- player who last scored serves the ball
 	ServingPlayer = 1
 
-	-- game state variable used to transition between different parts of the game
+	-- player who won the game; not set to a proper value until we reach
+	-- that state in the game
+	WinningPlayer = 0
+
+	-- the state of our game; can be any of the following:
+	-- 1. 'start' (the beginning of the game, before first serve)
+	-- 2. 'serve' (waiting on a key press to serve the ball)
+	-- 3. 'play' (the ball is in play, bouncing between paddles)
+	-- 4. 'done' (the game is over, with a victor, ready for restart)
 	GameState = "start"
 end
 
