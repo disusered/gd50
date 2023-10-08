@@ -123,6 +123,21 @@ function love.update(dt)
 			GameBall.dy = -GameBall.dy
 		end
 
+		-- detect left and right edge of the screen and reset if collided
+		if GameBall.x < 0 then
+			ServingPlayer = 1
+			P2Score = P2Score + 1
+			GameBall:reset()
+			GameState = "start"
+		end
+
+		if GameBall.x > VIRTUAL_WIDTH then
+			ServingPlayer = 2
+			P1Score = P1Score + 1
+			GameBall:reset()
+			GameState = "start"
+		end
+
 		GameBall:update(dt)
 	end
 
