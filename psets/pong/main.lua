@@ -244,7 +244,7 @@ function love.update(dt)
     -- player 2 (CPU)
     if gameState == 'play' then
       -- randomize position of ball i.e. add jitter
-      local y = (math.random(70,100)/100) * ball.y
+      local y = (math.random(80,100)/100) * ball.y
 
       -- if ball is moving towards player2
       if ball.dx > 0 then
