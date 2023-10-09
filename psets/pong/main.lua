@@ -246,12 +246,18 @@ function love.update(dt)
       -- randomize position of ball i.e. add jitter
       local y = (math.random(70,100)/100) * ball.y
 
-      -- if player2's paddle is above the ball, move up
-      if player2.y < y then
-        player2.dy = PADDLE_SPEED
+      -- if ball is moving towards player2
+      if ball.dx > 0 then
+        -- if player2's paddle is above the ball, move up
+        if player2.y < y then
+          player2.dy = PADDLE_SPEED
+        else
+          -- else move the paddle down
+          player2.dy = -PADDLE_SPEED
+        end
       else
-        -- else move the paddle down
-        player2.dy = -PADDLE_SPEED
+        -- if ball isn't moving towards player2, stop moving
+        player2.dy = 0
       end
     end
 
