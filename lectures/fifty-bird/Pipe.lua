@@ -12,7 +12,7 @@ function Pipe:init()
 	self.x = VIRTUAL_WIDTH
 
 	-- set the Y to a random value halfway below the screen
-	self.y = math.random(VIRTUAL_HEIGHT / 4, VIRTUAL_HEIGHT - 10)
+	self.y = math.random(VIRTUAL_HEIGHT / 4, VIRTUAL_HEIGHT - 40)
 
 	self.width = PIPE_IMAGE:getWidth()
 end
