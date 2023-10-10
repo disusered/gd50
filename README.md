@@ -72,3 +72,8 @@ Despite the course ending in June 2024, the gradebook will reset on January 9, s
 - Week 10: Dreadhalls - Dec 3 - Dec 9
 - Week 11: Portal - Dec 10 - Dec 16
 - Week 12: Final Project - Dec 17 - Jan 8
+
+## Additional Tools
+
+- Sound effects: https://www.bfxr.net/
+- Sprite editor: https://www.aseprite.org/
