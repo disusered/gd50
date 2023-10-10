@@ -4,7 +4,10 @@
 local push = require("push")
 
 -- class library for oop
-local class = require("class")
+Class = require("class")
+
+-- bird class we've written
+require("Bird")
 
 -- physical dimensions of the window
 WINDOW_WIDTH = 1280
@@ -28,6 +31,9 @@ local GROUND_SCROLL_SPEED = 60
 
 -- point at which we should loop our background back to X 0
 local BACKGROUND_LOOPING_POINT = 413
+
+-- bird sprite
+local bird = Bird()
 
 function love.load()
 	-- initialize nearest-neighbor filter
@@ -60,6 +66,9 @@ function love.draw()
 
 	-- draw the ground on top of the background, towards the bottom of the screen
 	love.graphics.draw(ground, -groundScroll, VIRTUAL_HEIGHT - 16)
+
+	-- render our bird to the screen using its own render logic
+	bird:render()
 
 	push:finish()
 end
