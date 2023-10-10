@@ -48,6 +48,28 @@ function love.load()
 		fullscreen = false,
 		resizable = true,
 	})
+
+	-- initialize input table
+	love.keyboard.keysPressed = {}
+end
+
+function love.keypressed(key)
+	-- add to our table of keys pressed this grame
+	love.keyboard.keysPressed[key] = true
+
+	-- allows us to quit the game
+	if key == "escape" then
+		love.event.quit()
+	end
+end
+
+-- check our global input table for keys we activated during this frame
+function love.keyboard.wasPressed(key)
+	if love.keyboard.keysPressed[key] then
+		return true
+	else
+		return false
+	end
 end
 
 function love.update(dt)
@@ -59,6 +81,9 @@ function love.update(dt)
 
 	-- update bird based on gravity
 	bird:update(dt)
+
+	-- reset input table
+	love.keyboard.keysPressed = {}
 end
 
 function love.draw()
@@ -78,10 +103,4 @@ end
 
 function love.resize(w, h)
 	push:resize(w, h)
-end
-
-function love.keypressed(key)
-	if key == "escape" then
-		love.event.quit()
-	end
 end
