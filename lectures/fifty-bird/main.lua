@@ -121,6 +121,14 @@ function love.update(dt)
 		-- for every pipe in the scene, update the pipe pairs
 		for k, pair in pairs(pipePairs) do
 			pair:update(dt)
+
+			-- check to see if bird collided with pipe
+			for l, pipe in pairs(pair.pipes) do
+				if bird:collides(pipe) then
+					-- pause the game to show collision
+					scrolling = false
+				end
+			end
 		end
 
 		-- remove any flagged pipes
