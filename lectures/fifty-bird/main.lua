@@ -3,6 +3,9 @@
 -- virtual resolution handling library
 local push = require("push")
 
+-- class library for oop
+local class = require("class")
+
 -- physical dimensions of the window
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
