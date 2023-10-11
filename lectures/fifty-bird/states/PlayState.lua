@@ -72,6 +72,11 @@ function PlayState:update(dt)
 			end
 		end
 	end
+
+	-- reset if we get to the ground
+	if self.bird.y > VIRTUAL_HEIGHT - 15 then
+		G_STATE_MACHINE:change("title")
+	end
 end
 
 function PlayState:render()
