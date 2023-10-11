@@ -16,6 +16,7 @@ require("StateMachine")
 
 -- states in our game
 require("states.BaseState")
+require("states.PlayState")
 require("states.TitleScreenState")
 
 -- physical dimensions of the window
@@ -47,18 +48,6 @@ local BACKGROUND_LOOPING_POINT = 413
 -- point at which we should loop our ground back to X 0
 local GROUND_LOOPING_POINT = 514
 
--- bird sprite
-local bird = Bird()
-
--- our table of spawning PipePairs
-local pipePairs = {}
-
--- our time for spawning pipes
-local spawnTimer = 0
-
--- initialize our last recorded Y value for a gap placement to base other gaps off of
-local lastY = -PIPE_HEIGHT + math.random(80) + 20
-
 function love.load()
 	-- initialize nearest-neighbor filter
 	love.graphics.setDefaultFilter("nearest", "nearest")
@@ -84,6 +73,9 @@ function love.load()
 	G_STATE_MACHINE = StateMachine({
 		["title"] = function()
 			return TitleScreenState()
+		end,
+		["play"] = function()
+			return PlayState()
 		end,
 	})
 	G_STATE_MACHINE:change("title")
