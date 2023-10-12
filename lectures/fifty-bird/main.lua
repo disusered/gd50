@@ -64,6 +64,16 @@ function love.load()
 	HUGE_FONT = love.graphics.newFont("flappy.ttf", 56)
 	love.graphics.setFont(FLAPPY_FONT)
 
+	-- initialize our table of sounds
+	SOUNDS = {
+		-- https://freesound.org/people/xsgianni/sounds/388079/
+		["music"] = love.audio.newSource("marios_way.mp3", "static"),
+	}
+
+	-- kick off music
+	SOUNDS["music"]:setLooping(true)
+	SOUNDS["music"]:play()
+
 	-- initialize virtual resolution
 	push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
 		vsync = true,
