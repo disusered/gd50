@@ -13,7 +13,7 @@ end
 function ScoreState:update(dt)
 	--go back to play if enter is pressed
 	if love.keyboard.wasPressed("enter") or love.keyboard.wasPressed("return") then
-		G_STATE_MACHINE:change("play")
+		G_STATE_MACHINE:change("countdown")
 	end
 end
 
