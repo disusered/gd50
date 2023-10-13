@@ -36,6 +36,7 @@ function ScoreState:render()
 
     love.graphics.printf('Press Enter to Play Again!', 0, 160, VIRTUAL_WIDTH, 'center')
 
-    -- render the medal
+    -- render the medals depending on the score
+    self.medal:set('silver')
     self.medal:render()
 end
