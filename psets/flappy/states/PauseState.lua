@@ -9,12 +9,16 @@
 PauseState = Class{__includes = BaseState}
 
 function PauseState:init()
+  sounds['pause']:play()
+  sounds['music']:pause()
 end
 
 -- Listen for user input to resume the game
 function PauseState:update(dt)
     if love.keyboard.wasPressed('p') then
+      sounds['pause']:play()
       gStateMachine:change('play')
+      sounds['music']:play()
     end
 end
 
