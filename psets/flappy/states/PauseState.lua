@@ -32,6 +32,9 @@ function PauseState:enter(params)
   self.score = params.score
   self.interval = params.interval
   self.lastY = params.lastY
+
+  -- Set global pause variable
+  gPaused = true
 end
 
 -- Listen for user input to resume the game
@@ -52,6 +55,9 @@ function PauseState:update(dt)
 
       -- resume music
       sounds['music']:play()
+
+      -- Set global pause variable
+      gPaused = false
     end
 end
 
