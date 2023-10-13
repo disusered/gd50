@@ -37,6 +37,14 @@ function ScoreState:render()
     love.graphics.printf('Press Enter to Play Again!', 0, 160, VIRTUAL_WIDTH, 'center')
 
     -- render the medals depending on the score
-    self.medal:set('silver')
+    if self.score >= 5 then
+      self.medal:set('gold')
+    elseif self.score >= 3 then
+      self.medal:set('silver')
+    elseif self.score >= 1 then
+      self.medal:set('bronze')
+    end
+
+    -- render the medal based on the score
     self.medal:render()
 end
