@@ -88,6 +88,9 @@ function PlayState:update(dt)
             -- trigger the brick's hit function, which removes it from play
             brick:hit()
 
+            -- spawn powerup
+            self.powerup.inPlay = true
+
             -- if we have enough points, recover a point of health
             if self.score > self.recoverPoints then
                 -- can't go above 3 health
