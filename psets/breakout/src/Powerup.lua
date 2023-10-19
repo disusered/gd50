@@ -15,4 +15,15 @@
   identically to the original, including all collision and scoring points. Once
   the player wins and proceeds to the `VictoryState`, all `Ball`s and `Powerups`
   should reset.
+
+  - [ ] Generate quads for the powerups
+  - [ ] Render the extra balls powerup in fixed position
+  - [ ] Define a condition for the extra balls powerup to spawn
+  - [ ] Render the extra balls powerup when condition is met
+  - [ ] Render the extra balls powerup from brick that met the condition
 ]]
+
+Powerup = Class{}
+
+function Powerup:init()
+end
