@@ -29,9 +29,15 @@ function Powerup:init(x, y)
   -- Spawn position
   self.x = x
   self.y = y
+
+  -- Used to determine whether this powerup should be rendered. We start with
+  -- false so the powerup doesn't spawn until we want it to
+  self.inPlay = false
 end
 
 function Powerup:render()
-  love.graphics.draw(gTextures['main'], gFrames['powerups'][9], self.x, self.y)
+  if self.inPlay then
+    love.graphics.draw(gTextures['main'], gFrames['powerups'][9], self.x, self.y)
+  end
 end
 
