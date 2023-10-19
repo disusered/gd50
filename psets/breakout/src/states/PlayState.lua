@@ -89,6 +89,8 @@ function PlayState:update(dt)
             brick:hit()
 
             -- spawn powerup
+            self.powerup.x = brick.x
+            self.powerup.y = brick.y
             self.powerup.inPlay = true
 
             -- if we have enough points, recover a point of health
