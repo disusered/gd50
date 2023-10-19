@@ -28,6 +28,7 @@ function PlayState:enter(params)
     self.highScores = params.highScores
     self.ball = params.ball
     self.level = params.level
+    self.powerup = Powerup(100, 100)
 
     self.recoverPoints = 5000
 
@@ -210,6 +211,7 @@ function PlayState:render()
 
     self.paddle:render()
     self.ball:render()
+    self.powerup:render()
 
     renderScore(self.score)
     renderHealth(self.health)
