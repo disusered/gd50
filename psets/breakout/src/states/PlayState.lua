@@ -60,6 +60,11 @@ function PlayState:update(dt)
     self.paddle:update(dt)
     self.ball:update(dt)
 
+    -- update powerups position
+    for k, powerup in pairs(self.powerups) do
+      powerup:update(dt)
+    end
+
     if self.ball:collides(self.paddle) then
         -- raise ball above paddle in case it goes below it, then reverse dy
         self.ball.y = self.paddle.y - 8

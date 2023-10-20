@@ -22,7 +22,7 @@
   - [x] Render the powerup in the center of the brick
   - [x] Allow ability to render multiple powerups
   - [x] Define a condition for the extra balls powerup to spawn
-  - [ ] Move the powerup down the screen
+  - [x] Move the powerup down the screen
   - [ ] Detect collision with the paddle
   - [ ] Spawn two more balls when collided with the paddle
 ]]
@@ -34,13 +34,22 @@ function Powerup:init(x, y)
   self.x = x
   self.y = y
 
+  -- Random fall velocity
+  self.dy = math.random(25, 50)
+
   -- Used to determine whether this powerup should be rendered. We start with
   -- true because we spawn powerups within the PlayState update function, so
   -- when they are created they should be visibile immediately
   self.inPlay = true
 end
 
+-- Update powerup position i.e. animate the fall at random velocity
+function Powerup:update(dt)
+  self.y = self.y + self.dy * dt
+end
+
 function Powerup:render()
+  -- Render powerup if in play
   if self.inPlay then
     love.graphics.draw(gTextures['main'], gFrames['powerups'][9], self.x, self.y)
   end
