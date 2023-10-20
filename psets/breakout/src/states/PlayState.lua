@@ -78,6 +78,18 @@ function PlayState:update(dt)
         -- play a sound indicating a powerup was collected
         gSounds['powerup-triggered']:play()
 
+
+        -- Spawn another two balls at the position the powerup was collected
+        for i = 2, 3 do
+          local ball = Ball()
+          ball.skin = math.random(7)
+          ball.x = powerup.x
+          ball.y = self.paddle.y - 8
+          ball.dx = math.random(-200, 200)
+          ball.dy = math.random(-50, -60)
+          self.balls[i] = ball
+        end
+
         -- remove powerup
         table.remove(self.powerups, k)
       end

@@ -25,8 +25,9 @@
   - [x] Move the powerup down the screen
   - [x] Detect collision with the paddle
   - [x] Add sounds to powerup spawn and collision
-  - [ ] Allow spawning multiple balls
-  - [ ] Spawn two more balls when collided with the paddle
+  - [x] Allow spawning multiple balls
+  - [x] Spawn two more balls when collided with the paddle
+  - [ ] Don't end the game until all balls are out of play
 ]]
 
 Powerup = Class{}
