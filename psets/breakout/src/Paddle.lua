@@ -11,6 +11,11 @@
     program to deflect the ball toward the bricks; if the ball passes
     the paddle, the player loses one heart. The Paddle can have a skin,
     which the player gets to choose upon starting the game.
+
+    - [x] Add method to decrease paddle size
+    - [ ] Add method to increase paddle size
+    - [ ] Center ball on paddle
+    - [ ] Set hitbox to size of paddle
 ]]
 
 Paddle = Class{}
@@ -41,6 +46,14 @@ function Paddle:init(skin)
     -- is the starting size, as the smallest is too tough to start with
     self.size = 2
 end
+
+-- Decrease size of paddle by 1 unless it is already the smallest size
+function Paddle:decrease_size()
+  if self.size > 1 then
+    self.size = self.size - 1
+  end
+end
+
 
 function Paddle:update(dt)
     -- keyboard input
