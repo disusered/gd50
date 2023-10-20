@@ -28,6 +28,8 @@ function PlayState:enter(params)
     self.highScores = params.highScores
     self.ball = params.ball
     self.level = params.level
+
+    -- Always reset the powerups when entering the PlayState
     self.powerups = {}
 
     self.recoverPoints = 5000
@@ -35,6 +37,9 @@ function PlayState:enter(params)
     -- give ball random starting velocity
     self.ball.dx = math.random(-200, 200)
     self.ball.dy = math.random(-50, -60)
+
+    -- Keep track of how many times we hit a brick
+    self.brickHits = 0
 end
 
 function PlayState:update(dt)
@@ -88,9 +93,14 @@ function PlayState:update(dt)
             -- trigger the brick's hit function, which removes it from play
             brick:hit()
 
-            -- spawn powerup at center of brick
-            local powerup = Powerup(brick.x + 16 / 2, brick.y)
-            self.powerups[#self.powerups + 1] = powerup
+            -- increment the number of times we hit a brick
+            self.brickHits = self.brickHits + 1
+
+            if self.brickHits % POWERUP_SPAWN_THRESHOLD == 0 then
+                -- spawn powerup at center of brick
+                local powerup = Powerup(brick.x + 16 / 2, brick.y)
+                self.powerups[#self.powerups + 1] = powerup
+            end
 
             -- if we have enough points, recover a point of health
             if self.score > self.recoverPoints then

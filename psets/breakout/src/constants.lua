@@ -20,3 +20,6 @@ VIRTUAL_HEIGHT = 243
 
 -- paddle movement speed
 PADDLE_SPEED = 200
+
+-- How many hits before a powerup spawns
+POWERUP_SPAWN_THRESHOLD = 5

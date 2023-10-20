@@ -21,8 +21,10 @@
   - [x] Render the extra balls powerup from brick that met the condition
   - [x] Render the powerup in the center of the brick
   - [x] Allow ability to render multiple powerups
-  - [ ] Define a condition for the extra balls powerup to spawn
-  - [ ] Render the extra balls powerup when condition is met
+  - [x] Define a condition for the extra balls powerup to spawn
+  - [ ] Move the powerup down the screen
+  - [ ] Detect collision with the paddle
+  - [ ] Spawn two more balls when collided with the paddle
 ]]
 
 Powerup = Class{}
