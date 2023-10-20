@@ -129,7 +129,13 @@ function PlayState:update(dt)
             if brick.inPlay and ball:collides(brick) then
 
                 -- add to score
+                local previous_score = self.score
                 self.score = self.score + (brick.tier * 200 + brick.color * 25)
+
+                -- resize paddle every 1000 points
+                if math.floor(previous_score/1000) < math.floor(self.score/1000) then
+                  self.paddle:increase_size()
+                end
 
                 -- trigger the brick's hit function, which removes it from play
                 brick:hit()
