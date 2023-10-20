@@ -16,6 +16,7 @@
   the player wins and proceeds to the `VictoryState`, all `Ball`s and `Powerups`
   should reset.
 
+  LOG
   - [x] Generate quads for the powerups
   - [x] Render the extra balls powerup in fixed position
   - [x] Render the extra balls powerup from brick that met the condition
@@ -27,7 +28,7 @@
   - [x] Add sounds to powerup spawn and collision
   - [x] Allow spawning multiple balls
   - [x] Spawn two more balls when collided with the paddle
-  - [ ] Don't end the game until all balls are out of play
+  - [x] Don't end the game until all balls are out of play
 ]]
 
 Powerup = Class{}

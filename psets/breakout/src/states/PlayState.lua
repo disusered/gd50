@@ -87,7 +87,7 @@ function PlayState:update(dt)
           ball.y = self.paddle.y - 8
           ball.dx = math.random(-200, 200)
           ball.dy = math.random(-50, -60)
-          self.balls[i] = ball
+          self.balls[#self.balls+1] = ball
         end
 
         -- remove powerup
@@ -226,28 +226,35 @@ function PlayState:update(dt)
         end
     end
 
-    -- if ball goes below bounds, revert to serve state and decrease health
+    -- iterate over all balls
     for k, ball in pairs(self.balls) do
+      -- if ball goes below bounds, remove it from play
       if ball.y >= VIRTUAL_HEIGHT then
-          self.health = self.health - 1
-          gSounds['hurt']:play()
+          -- remove ball from table by index
+          table.remove(self.balls, k)
 
-          if self.health == 0 then
-              gStateMachine:change('game-over', {
-                  score = self.score,
-                  highScores = self.highScores
-              })
-          else
-              gStateMachine:change('serve', {
-                  paddle = self.paddle,
-                  bricks = self.bricks,
-                  health = self.health,
-                  score = self.score,
-                  highScores = self.highScores,
-                  level = self.level,
-                  recoverPoints = self.recoverPoints
-              })
-          end
+          -- if we're out of balls, i.e. self.balls table is empty, end game
+          if table.getn(self.balls) == 0 then
+            self.health = self.health - 1
+            gSounds['hurt']:play()
+
+            if self.health == 0 then
+                gStateMachine:change('game-over', {
+                    score = self.score,
+                    highScores = self.highScores
+                })
+            else
+                gStateMachine:change('serve', {
+                    paddle = self.paddle,
+                    bricks = self.bricks,
+                    health = self.health,
+                    score = self.score,
+                    highScores = self.highScores,
+                    level = self.level,
+                    recoverPoints = self.recoverPoints
+                })
+            end
+        end
       end
     end
 
