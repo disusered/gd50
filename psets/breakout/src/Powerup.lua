@@ -23,7 +23,9 @@
   - [x] Allow ability to render multiple powerups
   - [x] Define a condition for the extra balls powerup to spawn
   - [x] Move the powerup down the screen
-  - [ ] Detect collision with the paddle
+  - [x] Detect collision with the paddle
+  - [x] Add sounds to powerup spawn and collision
+  - [ ] Allow spawning multiple balls
   - [ ] Spawn two more balls when collided with the paddle
 ]]
 
