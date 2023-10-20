@@ -30,17 +30,42 @@
 Powerup = Class{}
 
 function Powerup:init(x, y)
-  -- Spawn position
-  self.x = x
-  self.y = y
+    -- simple positional and dimensional variables
+    self.width = 16
+    self.height = 16
 
-  -- Random fall velocity
-  self.dy = math.random(25, 50)
+    -- Spawn position
+    self.x = x
+    self.y = y
 
-  -- Used to determine whether this powerup should be rendered. We start with
-  -- true because we spawn powerups within the PlayState update function, so
-  -- when they are created they should be visibile immediately
-  self.inPlay = true
+    -- Random fall velocity
+    self.dy = math.random(25, 50)
+
+    -- Used to determine whether this powerup should be rendered. We start with
+    -- true because we spawn powerups within the PlayState update function, so
+    -- when they are created they should be visibile immediately
+    self.inPlay = true
+end
+
+--[[
+    Expects an argument with a bounding box, i.e. the paddle, and returns true
+    if the bounding boxes of this and the argument overlap.
+]]
+function Powerup:collides(target)
+    -- first, check to see if the left edge of either is farther to the right
+    -- than the right edge of the other
+    if self.x > target.x + target.width or target.x > self.x + self.width then
+        return false
+    end
+
+    -- then check to see if the bottom edge of either is higher than the top
+    -- edge of the other
+    if self.y > target.y + target.height or target.y > self.y + self.height then
+        return false
+    end
+
+    -- if the above aren't true, they're overlapping
+    return true
 end
 
 -- Update powerup position i.e. animate the fall at random velocity

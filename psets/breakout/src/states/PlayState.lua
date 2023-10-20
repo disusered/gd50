@@ -63,6 +63,10 @@ function PlayState:update(dt)
     -- update powerups position
     for k, powerup in pairs(self.powerups) do
       powerup:update(dt)
+
+      if powerup:collides(self.paddle) then
+        powerup.inPlay = false
+      end
     end
 
     if self.ball:collides(self.paddle) then
