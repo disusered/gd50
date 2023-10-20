@@ -236,7 +236,7 @@ function PlayState:update(dt)
           -- if we're out of balls, i.e. self.balls table is empty, end game
           if table.getn(self.balls) == 0 then
             self.health = self.health - 1
-            self.paddle:decrease_size()
+            self.paddle:decrease()
             gSounds['hurt']:play()
 
             if self.health == 0 then
