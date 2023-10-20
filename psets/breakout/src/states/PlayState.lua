@@ -28,7 +28,7 @@ function PlayState:enter(params)
     self.highScores = params.highScores
     self.ball = params.ball
     self.level = params.level
-    self.powerup = Powerup(100, 100)
+    self.powerups = {}
 
     self.recoverPoints = 5000
 
@@ -88,10 +88,9 @@ function PlayState:update(dt)
             -- trigger the brick's hit function, which removes it from play
             brick:hit()
 
-            -- spawn powerup
-            self.powerup.x = brick.x
-            self.powerup.y = brick.y
-            self.powerup.inPlay = true
+            -- spawn powerup at center of brick
+            local powerup = Powerup(brick.x + 16 / 2, brick.y)
+            self.powerups[#self.powerups + 1] = powerup
 
             -- if we have enough points, recover a point of health
             if self.score > self.recoverPoints then
@@ -216,7 +215,11 @@ function PlayState:render()
 
     self.paddle:render()
     self.ball:render()
-    self.powerup:render()
+
+    -- render powerups
+    for k, powerup in pairs(self.powerups) do
+      powerup:render()
+    end
 
     renderScore(self.score)
     renderHealth(self.health)

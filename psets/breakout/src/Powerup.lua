@@ -18,9 +18,11 @@
 
   - [x] Generate quads for the powerups
   - [x] Render the extra balls powerup in fixed position
+  - [x] Render the extra balls powerup from brick that met the condition
+  - [x] Render the powerup in the center of the brick
+  - [x] Allow ability to render multiple powerups
   - [ ] Define a condition for the extra balls powerup to spawn
   - [ ] Render the extra balls powerup when condition is met
-  - [ ] Render the extra balls powerup from brick that met the condition
 ]]
 
 Powerup = Class{}
@@ -31,8 +33,9 @@ function Powerup:init(x, y)
   self.y = y
 
   -- Used to determine whether this powerup should be rendered. We start with
-  -- false so the powerup doesn't spawn until we want it to
-  self.inPlay = false
+  -- true because we spawn powerups within the PlayState update function, so
+  -- when they are created they should be visibile immediately
+  self.inPlay = true
 end
 
 function Powerup:render()
