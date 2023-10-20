@@ -13,9 +13,9 @@
     which the player gets to choose upon starting the game.
 
     - [x] Add method to decrease paddle size
+    - [x] Center ball on paddle
+    - [x] Set hitbox to size of paddle
     - [ ] Add method to increase paddle size
-    - [ ] Center ball on paddle
-    - [ ] Set hitbox to size of paddle
 ]]
 
 Paddle = Class{}
@@ -50,7 +50,14 @@ end
 -- Decrease size of paddle by 1 unless it is already the smallest size
 function Paddle:decrease_size()
   if self.size > 1 then
+    -- render smaller paddle
     self.size = self.size - 1
+
+    -- change middle point of paddle to smaller size
+    self.x = VIRTUAL_WIDTH / 2 - (self.size * 16)
+
+    -- change width of paddle to smaller size
+    self.width = self.size * 32
   end
 end
 
