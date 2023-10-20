@@ -60,12 +60,18 @@ function PlayState:update(dt)
     self.paddle:update(dt)
     self.ball:update(dt)
 
-    -- update powerups position
+    -- iterate over all powerups
     for k, powerup in pairs(self.powerups) do
+      -- update position of each powerup
       powerup:update(dt)
 
+      -- if a given powerup collides with the paddle, trigger its effect
       if powerup:collides(self.paddle) then
-        powerup.inPlay = false
+        -- play a sound indicating a powerup was collected
+        gSounds['powerup-triggered']:play()
+
+        -- remove powerup
+        table.remove(self.powerups, k)
       end
     end
 
@@ -108,7 +114,12 @@ function PlayState:update(dt)
             if self.brickHits % POWERUP_SPAWN_THRESHOLD == 0 then
                 -- spawn powerup at center of brick
                 local powerup = Powerup(brick.x + 16 / 2, brick.y)
+
+                -- add powerup to powerupts table
                 self.powerups[#self.powerups + 1] = powerup
+
+                -- play sound indicating powerup was spawned
+                gSounds['powerup']:play()
             end
 
             -- if we have enough points, recover a point of health
