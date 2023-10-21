@@ -17,8 +17,10 @@
     - [x] Add flag to Brick class to determine if brick is locked
     - [x] Render locked brick if flag is set
     - [x] Add particle effect to locked brick
-    - [ ] Add custom sound for locked brick
-    - [ ] Don't allow locked brick to be destroyed unless condition is met
+    - [x] Don't play sound on locked brick hit or destruction
+    - [x] Add custom sound for locked brick hit
+    - [x] Set locked brick to lowest tier
+    - [x] Don't allow locked brick to be destroyed unless condition is met
     - [ ] Add custom sound for when unlocked brick is destroyed
     - [ ] Add locked brick to LevelMaker
     - [ ] Add powerup to unlock locked brick
@@ -75,7 +77,7 @@ function Brick:init(x, y)
     self.inPlay = true
 
     -- used to short circuit brick color and render a locked brick
-    self.locked = false
+    self.locked = true
 
     -- particle system belonging to the brick, emitted on hit
     self.psystem = love.graphics.newParticleSystem(gTextures['particle'], 64)
@@ -121,13 +123,23 @@ function Brick:hit()
     )
     self.psystem:emit(64)
 
-    -- sound on hit
-    gSounds['brick-hit-2']:stop()
-    gSounds['brick-hit-2']:play()
+    -- sound on hit based on whether a brick is locked
+    if self.locked then
+        gSounds['locked-brick-hit']:play()
+    else
+        gSounds['brick-hit-2']:stop()
+        gSounds['brick-hit-2']:play()
+    end
 
-    -- if we're at a higher tier than the base, we need to go down a tier
-    -- if we're already at the lowest color, else just go down a color
-    if self.tier > 0 then
+    if self.locked then
+        -- locked bricks start at the lowest tier
+        self.tier = 0
+
+        -- TODO: Remove from play on hit when user has the unlock powerup
+        -- self.inPlay = false
+    elseif self.tier > 0 then
+        -- if we're at a higher tier than the base, we need to go down a tier
+        -- if we're already at the lowest color, else just go down a color
         if self.color == 1 then
             self.tier = self.tier - 1
             self.color = 5
@@ -144,7 +156,7 @@ function Brick:hit()
     end
 
     -- play a second layer sound if the brick is destroyed
-    if not self.inPlay then
+    if not self.inPlay and self.locked== false then
         gSounds['brick-hit-1']:stop()
         gSounds['brick-hit-1']:play()
     end
