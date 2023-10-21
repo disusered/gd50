@@ -12,6 +12,17 @@
     the ball will bounce away depending on the angle of collision. When all
     bricks are cleared in the current map, the player should be taken to a new
     layout of bricks.
+
+    - [x] Update bricks table to include locked brick
+    - [x] Add flag to Brick class to determine if brick is locked
+    - [x] Render locked brick if flag is set
+    - [x] Add particle effect to locked brick
+    - [ ] Add custom sound for locked brick
+    - [ ] Don't allow locked brick to be destroyed unless condition is met
+    - [ ] Add custom sound for when unlocked brick is destroyed
+    - [ ] Add locked brick to LevelMaker
+    - [ ] Add powerup to unlock locked brick
+    - [ ] Add sound for unlock powerup
 ]]
 
 Brick = Class{}
@@ -63,6 +74,9 @@ function Brick:init(x, y)
     -- used to determine whether this brick should be rendered
     self.inPlay = true
 
+    -- used to short circuit brick color and render a locked brick
+    self.locked = false
+
     -- particle system belonging to the brick, emitted on hit
     self.psystem = love.graphics.newParticleSystem(gTextures['particle'], 64)
 
@@ -85,17 +99,24 @@ end
     changing its color otherwise.
 ]]
 function Brick:hit()
+    -- Add short circuit to configure locked brick particle system
+    local particle_color = self.color
+
+    if self.locked then
+      particle_color = 5
+    end
+
     -- set the particle system to interpolate between two colors; in this case, we give
     -- it our self.color but with varying alpha; brighter for higher tiers, fading to 0
     -- over the particle's lifetime (the second color)
     self.psystem:setColors(
-        paletteColors[self.color].r / 255,
-        paletteColors[self.color].g / 255,
-        paletteColors[self.color].b / 255,
+        paletteColors[particle_color].r / 255,
+        paletteColors[particle_color].g / 255,
+        paletteColors[particle_color].b / 255,
         55 * (self.tier + 1) / 255,
-        paletteColors[self.color].r / 255,
-        paletteColors[self.color].g / 255,
-        paletteColors[self.color].b / 255,
+        paletteColors[particle_color].r / 255,
+        paletteColors[particle_color].g / 255,
+        paletteColors[particle_color].b / 255,
         0
     )
     self.psystem:emit(64)
@@ -134,11 +155,19 @@ function Brick:update(dt)
 end
 
 function Brick:render()
+    -- Calculate desired color
+    local color = 1 + ((self.color - 1) * 4) + self.tier
+
+    -- If brick has the locked flag, set table index to locked brick
+    if self.locked then
+      color = 24
+    end
+
     if self.inPlay then
         love.graphics.draw(gTextures['main'], 
             -- multiply color by 4 (-1) to get our color offset, then add tier to that
             -- to draw the correct tier and color brick onto the screen
-            gFrames['bricks'][1 + ((self.color - 1) * 4) + self.tier],
+            gFrames['bricks'][color],
             self.x, self.y)
     end
 end
