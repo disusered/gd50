@@ -31,6 +31,7 @@ LevelMaker = Class{}
     brick colors and tiers to choose based on the level passed in.
 ]]
 function LevelMaker.createMap(level)
+    local lockedBrick = false
     local bricks = {}
 
     -- randomly choose the number of rows
@@ -111,6 +112,18 @@ function LevelMaker.createMap(level)
                 b.color = solidColor
                 b.tier = solidTier
             end 
+
+            -- chance to spawn locked brick
+            if math.random(1, 5) == 1 then
+                -- Only spawn one locked brick per level
+                if lockedBrick == false then
+                    --  set brick to locked
+                    b.locked = true
+
+                    -- add flag to indicate locked brick has been spawned
+                    lockedBrick = true
+                end
+            end
 
             table.insert(bricks, b)
 

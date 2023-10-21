@@ -21,10 +21,11 @@
     - [x] Add custom sound for locked brick hit
     - [x] Set locked brick to lowest tier
     - [x] Don't allow locked brick to be destroyed unless condition is met
+    - [x] Spawn locked brick with LevelMaker
+    - [ ] Render powerup to unlock locked brick
+    - [x] Add sound for unlock powerup
     - [ ] Add custom sound for when unlocked brick is destroyed
-    - [ ] Add locked brick to LevelMaker
-    - [ ] Add powerup to unlock locked brick
-    - [ ] Add sound for unlock powerup
+    - [ ] Adjust points for locked brick
 ]]
 
 Brick = Class{}
@@ -77,7 +78,7 @@ function Brick:init(x, y)
     self.inPlay = true
 
     -- used to short circuit brick color and render a locked brick
-    self.locked = true
+    self.locked = false
 
     -- particle system belonging to the brick, emitted on hit
     self.psystem = love.graphics.newParticleSystem(gTextures['particle'], 64)
