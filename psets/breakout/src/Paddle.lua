@@ -15,11 +15,10 @@
     - [x] Add method to decrease paddle size
     - [x] Don't decrease size beyond smallest
     - [x] Center ball on paddle
-    - [x] Set hitbox to size of paddle
-    - [x] Reduce paddle size when losing a life
     - [x] Add method to increase paddle size
     - [x] Don't increase size beyond largest
     - [x] Increase paddle size when player exceeds certain score
+    - [x] Add sound for paddle size increase
 ]]
 
 Paddle = Class{}
@@ -74,6 +73,9 @@ function Paddle:increase_size()
 
     -- change width of paddle to larger size
     self.width = self.size * 32
+
+    -- play sound effect
+    gSounds['paddle-grow']:play()
   end
 end
 
