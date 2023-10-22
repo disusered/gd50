@@ -339,10 +339,6 @@ function PlayState:render()
     renderScore(self.score)
     renderHealth(self.health)
 
-    love.graphics.setFont(gFonts['small'])
-    love.graphics.setColor(0, 1, 0, 1)
-    love.graphics.print("Hit count: " .. self.hit_count, 5, 15)
-
     -- pause text, if paused
     if self.paused then
         love.graphics.setFont(gFonts['large'])
