@@ -45,6 +45,9 @@ function Powerup:init(x, y)
     -- Random fall velocity
     self.dy = math.random(25, 50)
 
+    -- Powerup type
+    self.type = 9
+
     -- Used to determine whether this powerup should be rendered. We start with
     -- true because we spawn powerups within the PlayState update function, so
     -- when they are created they should be visibile immediately
@@ -80,7 +83,7 @@ end
 function Powerup:render()
   -- Render powerup if in play
   if self.inPlay then
-    love.graphics.draw(gTextures['main'], gFrames['powerups'][9], self.x, self.y)
+    love.graphics.draw(gTextures['main'], gFrames['powerups'][self.type], self.x, self.y)
   end
 end
 

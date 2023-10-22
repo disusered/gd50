@@ -35,6 +35,20 @@ function PlayState:enter(params)
     -- Always reset the powerups when entering the PlayState
     self.powerups = {}
 
+    -- Determine if there is a locked brick in the level
+    -- TODO: Don't spawn at start of level only for debugging
+    for k, brick in pairs(self.bricks) do
+      if brick.locked then
+          -- Save a reference to the locked brick
+          self.lockedBrick = brick
+
+          -- Create a powerup to unlock the brick
+          local powerup = Powerup(brick.x + 16 / 2, brick.y)
+          powerup.type = 10
+          self.powerups[#self.powerups + 1] = powerup
+      end
+    end
+
     self.recoverPoints = 5000
 
     -- give initial ball random starting velocity
@@ -79,15 +93,21 @@ function PlayState:update(dt)
         gSounds['powerup-triggered']:play()
 
 
-        -- Spawn another two balls at the position the powerup was collected
-        for i = 2, 3 do
-          local ball = Ball()
-          ball.skin = math.random(7)
-          ball.x = powerup.x
-          ball.y = self.paddle.y - 8
-          ball.dx = math.random(-200, 200)
-          ball.dy = math.random(-50, -60)
-          self.balls[#self.balls+1] = ball
+        if powerup.type == 9 then
+            -- Spawn another two balls at the position the powerup was collected
+            for i = 2, 3 do
+              local ball = Ball()
+              ball.skin = math.random(7)
+              ball.x = powerup.x
+              ball.y = self.paddle.y - 8
+              ball.dx = math.random(-200, 200)
+              ball.dy = math.random(-50, -60)
+              self.balls[#self.balls+1] = ball
+            end
+        elseif powerup.type == 10 then
+            -- Unlock the locked brick
+            self.lockedBrick.locked = false
+            gSounds['locked-brick-unlock']:play()
         end
 
         -- remove powerup

@@ -22,9 +22,12 @@
     - [x] Set locked brick to lowest tier
     - [x] Don't allow locked brick to be destroyed unless condition is met
     - [x] Spawn locked brick with LevelMaker
-    - [ ] Render powerup to unlock locked brick
+    - [x] Render powerup to unlock locked brick
     - [x] Add sound for unlock powerup
-    - [ ] Add custom sound for when unlocked brick is destroyed
+    - [ ] Calculate number of hits to beat level
+    - [ ] Spawn unlock powerup once per level
+    - [ ] Respawn powerup if not collected
+    - [x] Add custom sound for when unlocked powerup is collected
     - [ ] Adjust points for locked brick
 ]]
 
@@ -132,27 +135,23 @@ function Brick:hit()
         gSounds['brick-hit-2']:play()
     end
 
-    if self.locked then
-        -- locked bricks start at the lowest tier
-        self.tier = 0
-
-        -- TODO: Remove from play on hit when user has the unlock powerup
-        -- self.inPlay = false
-    elseif self.tier > 0 then
-        -- if we're at a higher tier than the base, we need to go down a tier
-        -- if we're already at the lowest color, else just go down a color
-        if self.color == 1 then
-            self.tier = self.tier - 1
-            self.color = 5
+    if self.locked == false then
+        if self.tier > 0 then
+            -- if we're at a higher tier than the base, we need to go down a tier
+            -- if we're already at the lowest color, else just go down a color
+            if self.color == 1 then
+                self.tier = self.tier - 1
+                self.color = 5
+            else
+                self.color = self.color - 1
+            end
         else
-            self.color = self.color - 1
-        end
-    else
-        -- if we're in the first tier and the base color, remove brick from play
-        if self.color == 1 then
-            self.inPlay = false
-        else
-            self.color = self.color - 1
+            -- if we're in the first tier and the base color, remove brick from play
+            if self.color == 1 then
+                self.inPlay = false
+            else
+                self.color = self.color - 1
+            end
         end
     end
 
