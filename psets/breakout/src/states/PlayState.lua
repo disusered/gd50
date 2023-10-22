@@ -158,13 +158,21 @@ function PlayState:update(dt)
                 -- increment the number of times we hit a brick
                 self.brickHits = self.brickHits + 1
 
-                -- Create a powerup to unlock the brick
-                local powerup = Powerup(brick.x + 16 / 2, brick.y)
-                powerup.type = 10
-                self.powerups[#self.powerups + 1] = powerup
+                -- Set the probability of a locked powerup to spawn
+                local locked_probability = 2
 
-                -- play sound indicating unlock powerup was spawned
-                gSounds['powerup-locked']:play()
+                -- Create an unlock powerup to unlock the brick
+                if self.brickHits % locked_probability == 0 then
+                  -- Only spawn the unlock powerup if the brick is locked
+                  if self.lockedBrick.locked then
+                      local powerup = Powerup(brick.x + 16 / 2, brick.y)
+                      powerup.type = 10
+                      self.powerups[#self.powerups + 1] = powerup
+
+                      -- play sound indicating unlock powerup was spawned
+                      gSounds['powerup-locked']:play()
+                  end
+                end
 
                 -- spawn powerup if we hit a brick given the spawn threshold
                 if self.brickHits % POWERUP_SPAWN_THRESHOLD == 0 then
