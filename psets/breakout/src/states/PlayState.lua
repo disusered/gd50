@@ -41,11 +41,6 @@ function PlayState:enter(params)
       if brick.locked then
           -- Save a reference to the locked brick
           self.lockedBrick = brick
-
-          -- Create a powerup to unlock the brick
-          local powerup = Powerup(brick.x + 16 / 2, brick.y)
-          powerup.type = 10
-          self.powerups[#self.powerups + 1] = powerup
       end
     end
 
@@ -163,6 +158,15 @@ function PlayState:update(dt)
                 -- increment the number of times we hit a brick
                 self.brickHits = self.brickHits + 1
 
+                -- Create a powerup to unlock the brick
+                local powerup = Powerup(brick.x + 16 / 2, brick.y)
+                powerup.type = 10
+                self.powerups[#self.powerups + 1] = powerup
+
+                -- play sound indicating unlock powerup was spawned
+                gSounds['powerup-locked']:play()
+
+                -- spawn powerup if we hit a brick given the spawn threshold
                 if self.brickHits % POWERUP_SPAWN_THRESHOLD == 0 then
                     -- spawn powerup at center of brick
                     local powerup = Powerup(brick.x + 16 / 2, brick.y)

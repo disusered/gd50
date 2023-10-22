@@ -98,6 +98,7 @@ function love.load()
         ['high-score'] = love.audio.newSource('sounds/high_score.wav', 'static'),
         ['pause'] = love.audio.newSource('sounds/pause.wav', 'static'),
         ['powerup'] = love.audio.newSource('sounds/powerup.wav', 'static'),
+        ['powerup-locked'] = love.audio.newSource('sounds/powerup_locked.wav', 'static'),
         ['powerup-triggered'] = love.audio.newSource('sounds/powerup-triggered.wav', 'static'),
 
         ['music'] = love.audio.newSource('sounds/music.wav', 'static')
