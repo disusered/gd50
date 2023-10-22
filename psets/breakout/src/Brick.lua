@@ -24,11 +24,10 @@
     - [x] Spawn locked brick with LevelMaker
     - [x] Render powerup to unlock locked brick
     - [x] Add sound for unlock powerup
-    - [ ] Calculate number of hits to beat level
-    - [ ] Spawn unlock powerup once per level
-    - [ ] Respawn powerup if not collected
+    - [x] Calculate number of hits to beat level
+    - [x] Spawn unlock powerup once per level
+    - [x] Respawn powerup if not collected
     - [x] Add custom sound for when unlocked powerup is collected
-    - [ ] Adjust points for locked brick
 ]]
 
 Brick = Class{}

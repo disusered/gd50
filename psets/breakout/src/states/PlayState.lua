@@ -35,13 +35,19 @@ function PlayState:enter(params)
     -- Always reset the powerups when entering the PlayState
     self.powerups = {}
 
+    -- Pre-calculate the number of hits to beat the level
+    self.hit_count = 0
+
     -- Determine if there is a locked brick in the level
     -- TODO: Don't spawn at start of level only for debugging
     for k, brick in pairs(self.bricks) do
+      -- Save a reference to the locked brick
       if brick.locked then
-          -- Save a reference to the locked brick
           self.lockedBrick = brick
       end
+
+      -- Calculate the number of hits to beat the level
+      self.hit_count = self.hit_count + brick.color
     end
 
     self.recoverPoints = 5000
@@ -159,7 +165,7 @@ function PlayState:update(dt)
                 self.brickHits = self.brickHits + 1
 
                 -- Set the probability of a locked powerup to spawn
-                local locked_probability = 2
+                local locked_probability = math.random(1, self.hit_count)
 
                 -- Create an unlock powerup to unlock the brick
                 if self.brickHits % locked_probability == 0 then
@@ -332,6 +338,10 @@ function PlayState:render()
 
     renderScore(self.score)
     renderHealth(self.health)
+
+    love.graphics.setFont(gFonts['small'])
+    love.graphics.setColor(0, 1, 0, 1)
+    love.graphics.print("Hit count: " .. self.hit_count, 5, 15)
 
     -- pause text, if paused
     if self.paused then
