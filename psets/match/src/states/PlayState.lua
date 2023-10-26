@@ -63,6 +63,9 @@ function PlayState:enter(params)
     -- spawn a board and place it toward the right
     self.board = params.board or Board(VIRTUAL_WIDTH - 272, 16)
 
+    -- set level of board
+    self.board.level = self.level
+
     -- grab score from params if it was passed
     self.score = params.score or 0
 
