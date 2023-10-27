@@ -37,8 +37,12 @@ function Board:initializeTiles()
                 variety = 1
             end
 
+
+            -- set chance of shiny tile lower on initial layout, 2.5% chance
+            local shiny = math.random(40) == 1
+
             -- create a new tile at X,Y with a random color and variety
-            table.insert(self.tiles[tileY], Tile(tileX, tileY, math.random(18), variety))
+            table.insert(self.tiles[tileY], Tile(tileX, tileY, math.random(18), variety, shiny))
         end
     end
 
@@ -82,15 +86,36 @@ function Board:calculateMatches()
                 if matchNum >= 3 then
                     local match = {}
 
-                    -- go backwards from here by matchNum
+                    -- if any matched tile is shiny, then the whole row is deleted
+                    local hasShiny = false
+
+                    -- go backwards from here by matchNum to see if there are any shiny tiles
                     for x2 = x - 1, x - matchNum, -1 do
-                        
-                        -- add each tile to the match that's in that match
-                        table.insert(match, self.tiles[y][x2])
+                        -- set shiny flag if any matched tile is shiny
+                        if self.tiles[y][x2].shiny then
+                            hasShiny = true
+                        end
+                    end
+
+                    if hasShiny then
+                        -- delete the entire row if shiny
+                        for x3 = 8, 1, -1 do
+                            -- add each tile to the match that's in that match
+                            table.insert(match, self.tiles[y][x3])
+                        end
+                    else
+                        -- go backwards from here by matchNum if not shiny
+                        for x3 = x - 1, x - matchNum, -1 do
+                            -- add each tile to the match that's in that match
+                            table.insert(match, self.tiles[y][x3])
+                        end
                     end
 
                     -- add this match to our total matches table
                     table.insert(matches, match)
+
+                    -- remove the shiny flag for the next iteration
+                    hasShiny = false
                 end
 
                 matchNum = 1
@@ -105,11 +130,30 @@ function Board:calculateMatches()
         -- account for the last row ending with a match
         if matchNum >= 3 then
             local match = {}
-            
-            -- go backwards from end of last row by matchNum
-            for x = 8, 8 - matchNum + 1, -1 do
-                table.insert(match, self.tiles[y][x])
+
+            -- if any matched tile is shiny, then the whole row is deleted
+            local hasShiny = false
+
+            -- go backwards from here to end of last row to check for shiny tiles
+            for x2 = 8, 8 - matchNum + 1, -1 do
+                -- set shiny flag if any matched tile is shiny
+                if self.tiles[y][x2].shiny then
+                    hasShiny = true
+                end
             end
+
+          if hasShiny then
+              -- delete the entire row if shiny
+              for x3 = 8, 1, -1 do
+                  -- add each tile to the match that's in that match
+                  table.insert(match, self.tiles[y][x3])
+              end
+          else
+              -- go backwards from end of last row by matchNum
+              for x = 8, 8 - matchNum + 1, -1 do
+                  table.insert(match, self.tiles[y][x])
+              end
+          end
 
             table.insert(matches, match)
         end
@@ -250,8 +294,11 @@ function Board:getFallingTiles()
                     variety = 1
                 end
 
+                -- set chance of shiny tile higher on replacement tiles, 10% chance
+                local shiny = math.random(10) == 1
+
                 -- new tile with random color and variety
-                local tile = Tile(x, y, math.random(18), variety)
+                local tile = Tile(x, y, math.random(18), variety, shiny)
                 tile.y = -32
                 self.tiles[y][x] = tile
 
