@@ -41,8 +41,12 @@ function Board:initializeTiles()
             -- set chance of shiny tile lower on initial layout, 2.5% chance
             local shiny = math.random(40) == 1
 
+            -- limit to 8 unique colors
+            local allowedColors = {1, 2, 6, 7, 11, 12, 14, 17}
+            local color = allowedColors[math.random(#allowedColors)]
+
             -- create a new tile at X,Y with a random color and variety
-            table.insert(self.tiles[tileY], Tile(tileX, tileY, math.random(18), variety, shiny))
+            table.insert(self.tiles[tileY], Tile(tileX, tileY, color, variety, shiny))
         end
     end
 
@@ -297,8 +301,12 @@ function Board:getFallingTiles()
                 -- set chance of shiny tile higher on replacement tiles, 10% chance
                 local shiny = math.random(10) == 1
 
+                -- limit to 8 unique colors
+                local allowedColors = {1, 2, 6, 7, 11, 12, 14, 17}
+                local color = allowedColors[math.random(#allowedColors)]
+
                 -- new tile with random color and variety
-                local tile = Tile(x, y, math.random(18), variety, shiny)
+                local tile = Tile(x, y, color, variety, shiny)
                 tile.y = -32
                 self.tiles[y][x] = tile
 
