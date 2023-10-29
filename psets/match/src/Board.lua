@@ -58,6 +58,87 @@ function Board:initializeTiles()
     end
 end
 
+-- Swaps a base tile with a new tile and checks if there are any matches. If
+-- there are matches, then the swap is valid and the function returns true.
+function Board:swapMatchTest(baseTile, newTile)
+  -- whether there are matches after the swap
+  local hasMatch = false
+
+  -- Swap grid positions of tiles
+  local tempX = baseTile.gridX
+  local tempY = baseTile.gridY
+
+  baseTile.gridX = newTile.gridX
+  baseTile.gridY = newTile.gridY
+  newTile.gridX = tempX
+  newTile.gridY = tempY
+
+  -- swap tiles in the tiles table
+  self.tiles[baseTile.gridY][baseTile.gridX] = baseTile
+  self.tiles[newTile.gridY][newTile.gridX] = newTile
+
+  -- if we have any matches, the swap was valid
+  local matches = self:calculateMatches()
+  if matches then
+    hasMatch = true
+  end
+
+  -- always revert swap grid positions of tiles after counting
+  newTile.gridX = baseTile.gridX
+  newTile.gridY = baseTile.gridY
+  baseTile.gridX = tempX
+  baseTile.gridY = tempY
+
+  --revert swap tiles in the tiles table
+  self.tiles[baseTile.gridY][baseTile.gridX] = baseTile
+  self.tiles[newTile.gridY][newTile.gridX] = newTile
+
+  -- return whether there are matches
+  return hasMatch
+end
+
+-- Count the number of potential matches on the board. To do this, we need to
+-- swap everything left, right, up, and down, and see if that forms any matches.
+function Board:hasMatches()
+  local hasMatches = false
+
+  -- Iterate over every tile in the board
+  for y = 1, 8, 1 do
+      for x = 1, 8, 1 do
+          -- Current tile that is being tested
+          local currentTile = self.tiles[y][x]
+
+          -- Test swapping with tile to the left. This should only be tested if the x
+          -- position is greater than 1 because there is no tile to the left of the
+          -- first column.
+          if x > 1 and self:swapMatchTest(currentTile, self.tiles[y][x - 1]) then
+            hasMatches = true
+          end
+
+          -- Test swapping with tile to the right. This should only be tested if the x
+          -- position is less than 8 because there is no tile to the right of the last
+          -- column.
+          if x < 8 and self:swapMatchTest(currentTile, self.tiles[y][x + 1]) then
+            hasMatches = true
+          end
+
+          -- Test swapping with tile above. This should only be tested if the y position
+          -- is greater than 1 because there is no tile above the first row
+          if y > 1 and self:swapMatchTest(currentTile, self.tiles[y - 1][x]) then
+            hasMatches = true
+          end
+
+          -- Test swapping with tile below. This should only be tested if the y position
+          -- is less than 8 because there is no tile below the last row
+          if y < 8 and self:swapMatchTest(currentTile, self.tiles[y + 1][x]) then
+            hasMatches = true
+          end
+      end
+  end
+
+  return hasMatches
+end
+
 --[[
     Goes left to right, top to bottom in the board, calculating matches by counting consecutive
     tiles of the same color. Doesn't need to check the last tile in every row or column if the 

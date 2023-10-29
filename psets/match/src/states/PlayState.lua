@@ -39,6 +39,9 @@ function PlayState:init()
     self.score = 0
     self.timer = 60
 
+    -- count the potential matches on the board
+    self.hasMatches = false
+
     -- set our Timer class to turn cursor highlight on and off
     Timer.every(0.5, function()
         self.rectHighlighted = not self.rectHighlighted
@@ -76,6 +79,15 @@ end
 function PlayState:update(dt)
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
+    end
+
+    -- see if we have matches on the board
+    self.hasMatches = self.board:hasMatches()
+
+    -- if we have no matches, we need to reset the board
+    if not self.hasMatches then
+      gSounds['shuffle']:play()
+      self.board:initializeTiles()
     end
 
     -- go back to start if time runs out
