@@ -78,6 +78,7 @@ function love.load()
 
     -- initialize input table
     love.keyboard.keysPressed = {}
+    love.mouse.buttonsPressed = {}
 end
 
 function love.resize(w, h)
@@ -90,12 +91,23 @@ function love.keypressed(key)
     love.keyboard.keysPressed[key] = true
 end
 
+function love.mousepressed(x, y, button)
+    -- TODO: Get x and y of mouse click
+    -- add to our table of mouse buttons pressed this frame
+    love.mouse.buttonsPressed[button] = true
+end
+
 function love.keyboard.wasPressed(key)
     if love.keyboard.keysPressed[key] then
         return true
     else
         return false
     end
+end
+
+-- equivalent to our keyboard function from before, but for the mouse buttons
+function love.mouse.wasPressed(button)
+	return love.mouse.buttonsPressed[button]
 end
 
 function love.update(dt)
@@ -111,6 +123,7 @@ function love.update(dt)
     gStateMachine:update(dt)
 
     love.keyboard.keysPressed = {}
+    love.mouse.buttonsPressed = {}
 end
 
 function love.draw()
