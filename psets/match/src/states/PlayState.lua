@@ -242,7 +242,13 @@ function PlayState:calculateMatches()
 
 		-- add score for each match
 		for k, match in pairs(matches) do
-			self.score = self.score + #match * 50
+      -- add score for each tile in the match based on variety. variety 1 is a
+      -- 1x multipler, 2 is 2x, 3 is 3x, etc. In other words, if a variety 3
+      -- tile is in a match, it is worth 150 points. These are individiually
+      -- added up.
+      for i, tile in pairs(match) do
+        self.score = self.score + tile.variety * 50
+      end
 
 			-- increase timer by 1 second for each tile in match
 			self.timer = self.timer + #match
