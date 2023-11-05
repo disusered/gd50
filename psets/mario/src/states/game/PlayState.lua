@@ -14,7 +14,9 @@ function PlayState:init()
     self.tileMap = self.level.tileMap
     self.background = math.random(3)
     self.backgroundX = 0
-
+    self.keyColor = math.random(4)
+    self.keyCollected = false
+    self.unlocked = false
     self.gravityOn = true
     self.gravityAmount = 6
 
@@ -30,7 +32,6 @@ function PlayState:init()
         for y = 1, self.tileMap.height do
             if not groundFound then
                 if self.tileMap.tiles[y][playerX + 1].id == TILE_ID_GROUND then
-                  print("ground found: " .. "x: " .. playerX .. " y: " .. y)
                   groundFound = true
                 end
             end
@@ -57,6 +58,8 @@ function PlayState:init()
     })
 
     self:spawnEnemies()
+
+    self:spawnLockAndKey()
 
     self.player:changeState('falling')
 end
@@ -88,7 +91,10 @@ function PlayState:render()
     love.graphics.draw(gTextures['backgrounds'], gFrames['backgrounds'][self.background], math.floor(-self.backgroundX + 256), 0)
     love.graphics.draw(gTextures['backgrounds'], gFrames['backgrounds'][self.background], math.floor(-self.backgroundX + 256),
         gTextures['backgrounds']:getHeight() / 3 * 2, 0, 1, -1)
-    
+
+    if self.keyCollected and not self.unlocked then
+      love.graphics.draw(gTextures['keys-and-locks'], gFrames['keys-and-locks'][self.keyColor], VIRTUAL_WIDTH - 30, 0)
+    end
     -- translate the entire view of the scene to emulate a camera
     love.graphics.translate(-math.floor(self.camX), -math.floor(self.camY))
     
@@ -153,6 +159,72 @@ function PlayState:spawnEnemies()
                         })
 
                         table.insert(self.level.entities, snail)
+                    end
+                end
+            end
+        end
+    end
+end
+
+--[[
+    Adds lock and key to the level.
+]]
+function PlayState:spawnLockAndKey()
+    local keySpawned = false
+
+    -- spawn a lock in the level
+    for x = 1, self.tileMap.width do
+        -- flag for whether there's ground on this column of the level
+        local groundFound = false
+
+        for y = 1, self.tileMap.height do
+            if not groundFound then
+                if self.tileMap.tiles[y][x].id == TILE_ID_GROUND and self.tileMap.tiles[y][x].topper then
+                    groundFound = true
+
+                    -- random chance, can be any x tile
+                    if not keySpawned and math.random(self.tileMap.width / 6) == 1 then
+                        -- spawn key
+                        table.insert(self.level.objects,
+                            GameObject {
+                                texture = 'keys-and-locks',
+                                x = (x - 1) * TILE_SIZE,
+                                y = (y - 2) * TILE_SIZE + 2,
+                                width = 16,
+                                height = 16,
+                                frame = self.keyColor,
+                                consumable = true,
+                                onConsume = function()
+                                    self.keyCollected = true
+                                    gSounds['key']:play()
+                                end
+                            }
+                        )
+                        keySpawned = true
+
+                        -- spawn a lock ahead of the key
+                        table.insert(self.level.objects,
+                            GameObject {
+                                texture = 'keys-and-locks',
+                                x = (x + math.random(4, 16)) * TILE_SIZE,
+                                y = (y - 4) * TILE_SIZE,
+                                frame = self.keyColor + 4,
+                                width = 16,
+                                height = 16,
+                                collidable = true,
+                                solid = true,
+                                locked = true,
+                                onCollide = function(obj)
+                                    if self.keyCollected then
+                                        obj.locked = false
+                                        self.unlocked = true
+                                        gSounds['unlocked']:play()
+                                    else
+                                        gSounds['locked']:play()
+                                    end
+                                end
+                            }
+                        )
                     end
                 end
             end

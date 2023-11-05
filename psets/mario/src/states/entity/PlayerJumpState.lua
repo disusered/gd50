@@ -61,6 +61,10 @@ function PlayerJumpState:update(dt)
             if object.solid then
                 object.onCollide(object)
 
+                if object.locked == false then
+                    table.remove(self.player.level.objects, k)
+                end
+
                 self.player.y = object.y + object.height
                 self.player.dy = 0
                 self.player:changeState('falling')

@@ -20,6 +20,7 @@ function GameObject:init(def)
     self.consumable = def.consumable
     self.onCollide = def.onCollide
     self.onConsume = def.onConsume
+    self.locked = def.locked
     self.hit = def.hit
 end
 
