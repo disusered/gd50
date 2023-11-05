@@ -18,8 +18,32 @@ function PlayState:init()
     self.gravityOn = true
     self.gravityAmount = 6
 
+    -- Initial player x position
+    local playerX = 0
+
+    -- flag for whether there's ground on this column of the level
+    local groundFound = false
+
+    -- Find the first column with ground
+    while not groundFound do
+        -- Loop through the column until we find ground
+        for y = 1, self.tileMap.height do
+            if not groundFound then
+                if self.tileMap.tiles[y][playerX + 1].id == TILE_ID_GROUND then
+                  print("ground found: " .. "x: " .. playerX .. " y: " .. y)
+                  groundFound = true
+                end
+            end
+        end
+
+        -- If we didn't find ground, move to the next column
+        if not groundFound then
+          playerX = playerX + 1
+        end
+    end
+
     self.player = Player({
-        x = 0, y = 0,
+        x = playerX * 16, y = 0,
         width = 16, height = 20,
         texture = 'green-alien',
         stateMachine = StateMachine {
