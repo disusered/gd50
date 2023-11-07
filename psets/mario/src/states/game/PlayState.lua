@@ -218,6 +218,7 @@ function PlayState:spawnLockAndKey()
                                     if self.keyCollected then
                                         obj.locked = false
                                         self.unlocked = true
+                                        self:spawnFlag()
                                         gSounds['unlocked']:play()
                                     else
                                         gSounds['locked']:play()
@@ -230,4 +231,67 @@ function PlayState:spawnLockAndKey()
             end
         end
     end
+end
+
+--[[
+    Adds lock and key to the level.
+]]
+function PlayState:spawnFlag()
+    -- flag for whether there's ground on this column of the level
+    local groundFound = false
+
+    -- Initial flag x position
+    local flagY = 0
+    local flagX = self.tileMap.width - 3
+
+    -- Find the first column with ground
+    while not groundFound do
+        -- Loop through the column until we find ground
+        for y = 1, self.tileMap.height do
+            if not groundFound then
+                if self.tileMap.tiles[y][flagX + 1].id == TILE_ID_GROUND then
+                  groundFound = true
+                  flagY = y
+                end
+            end
+        end
+
+        -- If we didn't find ground, move to the next column
+        if not groundFound then
+          flagX = flagX + 1
+        end
+    end
+
+    -- spawn a flagpole at the end of the level
+    table.insert(self.level.objects,
+        GameObject {
+            texture = 'flagpoles',
+            x = (flagX) * TILE_SIZE,
+            y = (flagY - 4) * TILE_SIZE,
+            frame = 4,
+            width = 16,
+            height = 48,
+            collidable = true,
+            solid = false,
+            onCollide = function(obj)
+                gSounds['unlocked']:play()
+            end
+        }
+    )
+
+    table.insert(self.level.objects,
+        GameObject {
+            texture = 'flags',
+            x = (flagX) * TILE_SIZE + 8,
+            y = (flagY - 4) * TILE_SIZE + 4,
+            frame = 16,
+            width = 16,
+            height = 48,
+            collidable = true,
+            solid = false,
+            onCollide = function(obj)
+                gSounds['unlocked']:play()
+            end
+        }
+    )
 end
