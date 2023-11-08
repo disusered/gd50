@@ -10,13 +10,15 @@ PlayState = Class{__includes = BaseState}
 function PlayState:enter(params)
   if params then
     self.player.score = params.score
+    self.levelNumber = params.levelNumber
   end
 end
 
 function PlayState:init()
     self.camX = 0
     self.camY = 0
-    self.level = LevelMaker.generate(100, 10)
+    self.levelNumber = 1
+    self.level = LevelMaker.generate(50 + (self.levelNumber * 10), 10)
     self.tileMap = self.level.tileMap
     self.background = math.random(3)
     self.backgroundX = 0
@@ -293,7 +295,8 @@ function PlayState:spawnFlag()
             onConsume= function()
               gSounds['flag']:play()
               gStateMachine:change('play', {
-                score = self.player.score + 500
+                score = self.player.score + 500,
+                levelNumber = self.levelNumber + 1
               })
             end
         }
