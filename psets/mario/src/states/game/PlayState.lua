@@ -7,6 +7,12 @@
 
 PlayState = Class{__includes = BaseState}
 
+function PlayState:enter(params)
+  if params then
+    self.player.score = params.score
+  end
+end
+
 function PlayState:init()
     self.camX = 0
     self.camY = 0
@@ -283,10 +289,12 @@ function PlayState:spawnFlag()
             frame = 4,
             width = 16,
             height = 48,
-            consumable = true,
-            onConsume = function()
+            consumable= true,
+            onConsume= function()
               gSounds['flag']:play()
-              gStateMachine:change('start')
+              gStateMachine:change('play', {
+                score = self.player.score + 500
+              })
             end
         }
     )
