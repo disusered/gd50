@@ -66,6 +66,7 @@ gSounds = {
     ['locked'] = love.audio.newSource('sounds/locked.wav', 'static'),
     ['unlocked'] = love.audio.newSource('sounds/unlocked.wav', 'static'),
     ['key'] = love.audio.newSource('sounds/key.wav', 'static'),
+    ['flag'] = love.audio.newSource('sounds/flag.wav', 'static'),
 }
 
 gTextures = {

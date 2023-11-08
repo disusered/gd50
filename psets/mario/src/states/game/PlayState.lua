@@ -256,11 +256,23 @@ function PlayState:spawnFlag()
             end
         end
 
-        -- If we didn't find ground, move to the next column
+        -- If we didn't find ground, move to the previous column
         if not groundFound then
-          flagX = flagX + 1
+          flagX = flagX - 1
         end
     end
+
+    -- Flag to mount on the flagpole
+    local flag = GameObject {
+        texture = 'flags',
+        x = (flagX) * TILE_SIZE + 8,
+        y = (flagY - 4) * TILE_SIZE + 4,
+        frame = 16,
+        width = 16,
+        height = 48,
+        collidable = false,
+        solid = false,
+    }
 
     -- spawn a flagpole at the end of the level
     table.insert(self.level.objects,
@@ -271,27 +283,13 @@ function PlayState:spawnFlag()
             frame = 4,
             width = 16,
             height = 48,
-            collidable = true,
-            solid = false,
-            onCollide = function(obj)
-                gSounds['unlocked']:play()
+            consumable = true,
+            onConsume = function()
+              gSounds['flag']:play()
+              gStateMachine:change('start')
             end
         }
     )
 
-    table.insert(self.level.objects,
-        GameObject {
-            texture = 'flags',
-            x = (flagX) * TILE_SIZE + 8,
-            y = (flagY - 4) * TILE_SIZE + 4,
-            frame = 16,
-            width = 16,
-            height = 48,
-            collidable = true,
-            solid = false,
-            onCollide = function(obj)
-                gSounds['unlocked']:play()
-            end
-        }
-    )
+    table.insert(self.level.objects, flag)
 end
