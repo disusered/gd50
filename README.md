@@ -62,9 +62,9 @@ Despite the course ending in June 2024, the gradebook will reset on January 9, s
 
 - [x] Week 1: Pong - Oct 1 - Oct 7
 - [x] Week 2: Flappy Bird - Oct 8 - Oct 14
-- [-] Week 3: Breakout - Oct 15 - Oct 21
-- [ ] Week 4: Match-3 - Oct 22 - Oct 28
-- [ ] Week 5: Mario - Oct 29 - Nov 4
+- [x] Week 3: Breakout - Oct 15 - Oct 21
+- [-] Week 4: Match-3 - Oct 22 - Oct 28
+- [-] Week 5: Mario - Oct 29 - Nov 4
 - [ ] Week 6: Zelda - Nov 5 - Nov 11
 - [ ] Week 7: Angry Birds - Nov 12 - Nov 18
 - [ ] Week 8: Pokemon - Nov 19 - Nov 25
