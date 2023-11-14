@@ -25,7 +25,22 @@ GAME_OBJECT_DEFS = {
         }
     },
     ['pot'] = {
-        -- TODO: Add pot object
+        type = 'pot',
+        texture = 'tiles',
+        frame = 14,
+        width = 16,
+        height = 16,
+        -- TODO: Make solid work
+        solid = true,
+        defaultState = 'new',
+        states = {
+            ['new'] = {
+                frame = 14
+            },
+            ['broken'] = {
+                frame = 52
+            }
+        }
     },
     ['heart'] = {
         type = 'heart',
