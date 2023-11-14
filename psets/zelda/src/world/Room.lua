@@ -54,6 +54,7 @@ function Room:generateEntities()
         table.insert(self.entities, Entity {
             animations = ENTITY_DEFS[type].animations,
             walkSpeed = ENTITY_DEFS[type].walkSpeed or 20,
+            hasHeart = math.random(10) == 1,
 
             -- ensure X and Y are within bounds of the map
             x = math.random(MAP_RENDER_OFFSET_X + TILE_SIZE,
@@ -78,6 +79,7 @@ end
 
 --[[
     Randomly creates an assortment of obstacles for the player to navigate around.
+    TODO: Generate a pot object
 ]]
 function Room:generateObjects()
     local switch = GameObject(
@@ -174,8 +176,16 @@ function Room:update(dt)
                 gStateMachine:change('game-over')
             end
         end
+
+        if entity.dead and entity.hasHeart then
+            local heart = GameObject(GAME_OBJECT_DEFS['heart'], entity.x, entity.y)
+            table.insert(self.objects, heart)
+            entity.hasHeart = false
+        end
     end
 
+    -- TODO: Add pot collision
+    -- TODO: Add heart consumable
     for k, object in pairs(self.objects) do
         object:update(dt)
 

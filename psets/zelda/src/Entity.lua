@@ -37,6 +37,9 @@ function Entity:init(def)
     -- timer for turning transparency on and off, flashing
     self.flashTimer = 0
 
+    -- whether the entity has a heart or not
+    self.hasHeart = def.hasHeart or false
+
     self.dead = false
 end
 

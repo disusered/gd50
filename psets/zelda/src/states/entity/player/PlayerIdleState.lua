@@ -24,4 +24,7 @@ function PlayerIdleState:update(dt)
     if love.keyboard.wasPressed('space') then
         self.entity:changeState('swing-sword')
     end
+
+    -- TODO: Add a keymap for the pot pickup and throw
+    -- TODO: Change to pot pickup and throw state(s)
 end

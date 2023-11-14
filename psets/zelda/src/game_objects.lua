@@ -25,6 +25,20 @@ GAME_OBJECT_DEFS = {
         }
     },
     ['pot'] = {
-        -- TODO
-    }
+        -- TODO: Add pot object
+    },
+    ['heart'] = {
+        type = 'heart',
+        texture = 'hearts',
+        frame = 1,
+        width = 16,
+        height = 16,
+        solid = false,
+        defaultState = 'full',
+        states = {
+            ['full'] = {
+                frame = 5
+            }
+        }
+    },
 }

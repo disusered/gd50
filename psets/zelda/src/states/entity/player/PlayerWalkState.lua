@@ -38,6 +38,8 @@ function PlayerWalkState:update(dt)
         self.entity:changeState('swing-sword')
     end
 
+    -- TODO: Add keyboard handler for pot interactions
+
     -- perform base collision detection against walls
     EntityWalkState.update(self, dt)
 
