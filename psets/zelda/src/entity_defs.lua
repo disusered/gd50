@@ -71,6 +71,43 @@ ENTITY_DEFS = {
                 texture = 'character-swing-sword'
             },
             -- TODO: Add carry pot animations
+            ['pot-walk-left'] = {
+                frames = {13, 14, 15, 16},
+                interval = 0.15,
+                texture = 'character-pot-walk'
+            },
+            ['pot-walk-right'] = {
+                frames = {5, 6, 7, 8},
+                interval = 0.15,
+                texture = 'character-pot-walk'
+            },
+            ['pot-walk-down'] = {
+                frames = {1, 2, 3, 4},
+                interval = 0.15,
+                texture = 'character-pot-walk'
+            },
+            ['pot-walk-up'] = {
+                frames = {9, 10, 11, 12},
+                interval = 0.15,
+                texture = 'character-pot-walk'
+            },
+            ['pot-idle-left'] = {
+                frames = {13},
+                texture = 'character-pot-walk'
+            },
+            ['pot-idle-right'] = {
+                frames = {5},
+                texture = 'character-pot-walk'
+            },
+            ['pot-idle-down'] = {
+                frames = {1},
+                texture = 'character-pot-walk'
+            },
+            ['pot-idle-up'] = {
+                frames = {9},
+                texture = 'character-pot-walk'
+            },
+            -- TODO: Add pick-up pot animations
         }
     },
     ['skeleton'] = {
