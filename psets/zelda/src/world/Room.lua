@@ -177,17 +177,36 @@ function Room:update(dt)
             end
         end
 
+        -- add a heart to the room when an entity dies if it has a heart
         if entity.dead and entity.hasHeart then
             local heart = GameObject(GAME_OBJECT_DEFS['heart'], entity.x, entity.y)
+
+            heart.onCollide = function()
+                if not heart.used then
+                    -- the default health max is 6, so we don't want to go above that
+                    self.player.health = math.min(self.player.health + 2, 6)
+
+                    -- play heart sound
+                    gSounds['heart']:play()
+
+                    -- indicate that the heart has been taken
+                    heart.used = true
+                end
+            end
+
             table.insert(self.objects, heart)
             entity.hasHeart = false
         end
     end
 
     -- TODO: Add pot collision
-    -- TODO: Add heart consumable
     for k, object in pairs(self.objects) do
         object:update(dt)
+
+        -- remove any objects that are used up, removing them from the table
+        if object.used then
+            table.remove(self.objects, k)
+        end
 
         -- trigger collision callback on object
         if self.player:collides(object) then

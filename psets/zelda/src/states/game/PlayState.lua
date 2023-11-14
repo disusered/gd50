@@ -51,7 +51,6 @@ function PlayState:render()
     self.dungeon:render()
     love.graphics.pop()
 
-    -- TODO: Add hearts when picking up
     -- draw player hearts, top of screen
     local healthLeft = self.player.health
     local heartFrame = 1
