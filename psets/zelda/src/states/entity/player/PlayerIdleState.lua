@@ -21,10 +21,12 @@ function PlayerIdleState:update(dt)
         self.entity:changeState('walk')
     end
 
+    -- TODO: Prevent changing state if in carry-pot state
     if love.keyboard.wasPressed('space') then
         self.entity:changeState('swing-sword')
     end
 
-    -- TODO: Add a keymap for the pot pickup and throw
-    -- TODO: Change to pot pickup and throw state(s)
+    if love.keyboard.wasPressed('return') then
+        self.entity:changeState('carry-pot')
+    end
 end

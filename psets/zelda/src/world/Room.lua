@@ -79,7 +79,6 @@ end
 
 --[[
     Randomly creates an assortment of obstacles for the player to navigate around.
-    TODO: Generate a pot object
 ]]
 function Room:generateObjects()
     local switch = GameObject(
@@ -209,7 +208,6 @@ function Room:update(dt)
         end
     end
 
-    -- TODO: Add pot collision
     for k, object in pairs(self.objects) do
         object:update(dt)
 

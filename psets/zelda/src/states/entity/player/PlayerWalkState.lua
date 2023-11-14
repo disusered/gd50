@@ -34,11 +34,14 @@ function PlayerWalkState:update(dt)
         self.entity:changeState('idle')
     end
 
+    -- TODO: Prevent changing state if in carry-pot state
     if love.keyboard.wasPressed('space') then
         self.entity:changeState('swing-sword')
     end
 
-    -- TODO: Add keyboard handler for pot interactions
+    if love.keyboard.wasPressed('enter') then
+        self.entity:changeState('carry-pot')
+    end
 
     -- perform base collision detection against walls
     EntityWalkState.update(self, dt)
