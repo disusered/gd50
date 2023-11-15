@@ -33,7 +33,6 @@ function PlayerIdleState:update(dt)
 
     local direction = self.entity.direction
 
-    -- TODO: Delete pot or move it to the player's position
     for k, object in pairs(self.dungeon.currentRoom.objects) do
         if love.keyboard.wasPressed('return') then
             if object.type == 'pot' then
@@ -42,6 +41,7 @@ function PlayerIdleState:update(dt)
                     if object.x == condition or object.x == condition - 1 then
                         if self.entity.y < object.y + object.height or self.entity.y > object.y - object.height then
                             self.entity:changeState('pot-lift')
+                            table.remove(self.dungeon.currentRoom.objects, k)
                         end
                     end
                 elseif direction == 'right' then
@@ -49,6 +49,7 @@ function PlayerIdleState:update(dt)
                     if object.x == condition or object.x == condition + 1 then
                         if self.entity.y < object.y + object.height or self.entity.y > object.y - object.height then
                             self.entity:changeState('pot-lift')
+                            table.remove(self.dungeon.currentRoom.objects, k)
                         end
                     end
                 elseif direction == 'up' then
@@ -56,6 +57,7 @@ function PlayerIdleState:update(dt)
                     if object.y == condition or object.y == condition + 1 then
                         if self.entity.x < object.x + object.width or self.entity.x > object.x - object.width then
                             self.entity:changeState('pot-lift')
+                            table.remove(self.dungeon.currentRoom.objects, k)
                         end
                     end
                 elseif direction == 'down' then
@@ -63,6 +65,7 @@ function PlayerIdleState:update(dt)
                     if object.y == condition or object.y == condition + 1 then
                         if self.entity.x < object.x + object.width or self.entity.x > object.x - object.width then
                             self.entity:changeState('pot-lift')
+                            table.remove(self.dungeon.currentRoom.objects, k)
                         end
                     end
                 end
