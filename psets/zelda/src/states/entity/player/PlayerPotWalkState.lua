@@ -5,9 +5,9 @@
     Author: Carlos Antonio
 ]]
 
-PlayerCarryPotState = Class{__includes = BaseState}
+PlayerPotWalkState = Class{__includes = BaseState}
 
-function PlayerCarryPotState:init(player, dungeon)
+function PlayerPotWalkState:init(player, dungeon)
     self.entity = player
     self.dungeon = dungeon
 
@@ -16,7 +16,7 @@ function PlayerCarryPotState:init(player, dungeon)
     self.entity.offsetX = 0
 end
 
-function PlayerCarryPotState:update(dt)
+function PlayerPotWalkState:update(dt)
     if love.keyboard.isDown('left') then
         self.entity.direction = 'left'
         self.entity:changeAnimation('pot-walk-left')
@@ -37,7 +37,7 @@ function PlayerCarryPotState:update(dt)
     EntityWalkState.update(self, dt)
 end
 
-function PlayerCarryPotState:render()
+function PlayerPotWalkState:render()
     local anim = self.entity.currentAnimation
     love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
         math.floor(self.entity.x - self.entity.offsetX), math.floor(self.entity.y - self.entity.offsetY))
