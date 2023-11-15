@@ -219,7 +219,6 @@ function Room:update(dt)
         -- do not allow player to walk through objects. the extra space on the
         -- positions is to prevent additional collisions when changing direction
         if object.solid and self.player:collides(object) then
-            self.bumped = true
             if self.player.direction =='right' then
                 self.player.x = object.x - self.player.width - 1
             elseif self.player.direction == 'left' then

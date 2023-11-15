@@ -38,10 +38,6 @@ function PlayerWalkState:update(dt)
         self.entity:changeState('swing-sword')
     end
 
-    if love.keyboard.wasPressed('enter') then
-        self.entity:changeState('pot-walk')
-    end
-
     -- perform base collision detection against walls
     EntityWalkState.update(self, dt)
 
