@@ -40,28 +40,28 @@ function PlayerIdleState:update(dt)
                     local condition = math.floor(self.entity.x) - self.entity.width
                     if object.x == condition or object.x == condition - 1 then
                         if self.entity.y < object.y + object.height or self.entity.y > object.y - object.height then
-                            self.entity:changeState('pot-walk')
+                            self.entity:changeState('pot-lift')
                         end
                     end
                 elseif direction == 'right' then
                     local condition = math.floor(self.entity.x) + object.width
                     if object.x == condition or object.x == condition + 1 then
                         if self.entity.y < object.y + object.height or self.entity.y > object.y - object.height then
-                            self.entity:changeState('pot-walk')
+                            self.entity:changeState('pot-lift')
                         end
                     end
                 elseif direction == 'up' then
                     local condition = math.floor(self.entity.y) - 6
                     if object.y == condition or object.y == condition + 1 then
                         if self.entity.x < object.x + object.width or self.entity.x > object.x - object.width then
-                            self.entity:changeState('pot-walk')
+                            self.entity:changeState('pot-lift')
                         end
                     end
                 elseif direction == 'down' then
                     local condition = math.floor(self.entity.y) + self.entity.height
                     if object.y == condition or object.y == condition + 1 then
                         if self.entity.x < object.x + object.width or self.entity.x > object.x - object.width then
-                            self.entity:changeState('pot-walk')
+                            self.entity:changeState('pot-lift')
                         end
                     end
                 end
