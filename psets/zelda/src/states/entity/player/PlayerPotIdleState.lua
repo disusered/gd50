@@ -29,7 +29,7 @@ function PlayerPotIdleState:update(dt)
         self.entity:changeState('pot-walk')
     end
 
-    -- TODO: Update pot position based on player position
+    -- update pot location
     self.pot.x = self.entity.x
     self.pot.y = self.entity.y - 12
 
