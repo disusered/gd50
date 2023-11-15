@@ -10,6 +10,7 @@ PlayerPotWalkState = Class{__includes = BaseState}
 function PlayerPotWalkState:init(player, dungeon)
     self.entity = player
     self.dungeon = dungeon
+    self.thrown = false
     self.pot = GameObject(GAME_OBJECT_DEFS['pot'], self.entity.x, self.entity.y)
 
     -- render offset for spaced character sprite
@@ -38,8 +39,17 @@ function PlayerPotWalkState:update(dt)
     EntityWalkState.update(self, dt)
 
     -- update pot location
-    self.pot.x = self.entity.x
-    self.pot.y = self.entity.y - 12
+    if self.thrown == false then
+        self.pot.x = self.entity.x
+        self.pot.y = self.entity.y - 12
+    end
+
+    -- TODO: Chuck pot when pressing return
+    if love.keyboard.wasPressed('return') then
+        self.thrown = true
+        self.pot:fire(self.entity.direction, dt)
+        -- self.entity:changeState('walk')
+    end
 end
 
 function PlayerPotWalkState:render()

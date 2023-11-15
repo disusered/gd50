@@ -10,6 +10,7 @@ PlayerPotIdleState = Class{__includes = EntityIdleState}
 function PlayerPotIdleState:init(entity, dungeon)
     self.entity = entity
     self.dungeon = dungeon
+    self.thrown = false
     self.pot = GameObject(GAME_OBJECT_DEFS['pot'], self.entity.x, self.entity.y)
 
     EntityIdleState.init(self, entity)
@@ -30,12 +31,16 @@ function PlayerPotIdleState:update(dt)
     end
 
     -- update pot location
-    self.pot.x = self.entity.x
-    self.pot.y = self.entity.y - 12
+    if self.thrown == false then
+        self.pot.x = self.entity.x
+        self.pot.y = self.entity.y - 12
+    end
 
     -- TODO: Chuck pot when pressing return
     if love.keyboard.wasPressed('return') then
-        self.entity:changeState('walk')
+        self.thrown = true
+        self.pot:fire(self.entity.direction, dt)
+        -- self.entity:changeState('walk')
     end
 end
 

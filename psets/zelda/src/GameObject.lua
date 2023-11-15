@@ -44,3 +44,16 @@ function GameObject:render(adjacentOffsetX, adjacentOffsetY)
     love.graphics.draw(gTextures[self.texture], gFrames[self.texture][self.states[self.state].frame or self.frame],
         self.x + adjacentOffsetX, self.y + adjacentOffsetY)
 end
+
+-- TODO: Move relative to dt
+function GameObject:fire(direction, dt)
+    if direction == 'left' then
+        self.x = self.x - 50
+    elseif direction == 'right' then
+        self.x = self.x + 50
+    elseif direction == 'up' then
+        self.y = self.y - 50
+    elseif direction == 'down' then
+        self.y = self.y + 50
+    end
+end
