@@ -13,6 +13,8 @@ function PlayerPotIdleState:enter(params)
     -- render offset for spaced character sprite (negated in render function of state)
     self.entity.offsetY = 5
     self.entity.offsetX = 0
+
+    -- TODO: Render pot above player
 end
 
 function PlayerPotIdleState:update(dt)
@@ -21,7 +23,9 @@ function PlayerPotIdleState:update(dt)
         self.entity:changeState('pot-walk')
     end
 
-    -- TODO: Chuck pot return
+    -- TODO: Update pot position based on player position
+
+    -- TODO: Chuck pot when pressing return
     if love.keyboard.wasPressed('return') then
         self.entity:changeState('walk')
     end

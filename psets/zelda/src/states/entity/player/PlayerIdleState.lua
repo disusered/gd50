@@ -33,6 +33,7 @@ function PlayerIdleState:update(dt)
 
     local direction = self.entity.direction
 
+    -- TODO: Delete pot or move it to the player's position
     for k, object in pairs(self.dungeon.currentRoom.objects) do
         if love.keyboard.wasPressed('return') then
             if object.type == 'pot' then

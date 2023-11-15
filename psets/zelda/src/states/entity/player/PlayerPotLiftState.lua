@@ -13,70 +13,28 @@ function PlayerPotLiftState:init(player, dungeon)
 
     -- render offset for spaced character sprite
     self.player.offsetY = 5
-    self.player.offsetX = 8
+    self.player.offsetX = 0
 
-    -- create hitbox based on where the player is and facing
-    local direction = self.player.direction
-    local hitboxX, hitboxY, hitboxWidth, hitboxHeight
-
-    if direction == 'left' then
-        hitboxWidth = 8
-        hitboxHeight = 16
-        hitboxX = self.player.x - hitboxWidth
-        hitboxY = self.player.y + 2
-    elseif direction == 'right' then
-        hitboxWidth = 8
-        hitboxHeight = 16
-        hitboxX = self.player.x + self.player.width
-        hitboxY = self.player.y + 2
-    elseif direction == 'up' then
-        hitboxWidth = 16
-        hitboxHeight = 8
-        hitboxX = self.player.x
-        hitboxY = self.player.y - hitboxHeight
-    else
-        hitboxWidth = 16
-        hitboxHeight = 8
-        hitboxX = self.player.x
-        hitboxY = self.player.y + self.player.height
-    end
-
-    -- separate hitbox for the player's sword; will only be active during this state
-    self.swordHitbox = Hitbox(hitboxX, hitboxY, hitboxWidth, hitboxHeight)
-
-    -- sword-left, sword-up, etc
-    self.player:changeAnimation('sword-' .. self.player.direction)
+    -- pot-lift-left, pot-lift-up, etc
+    self.player:changeAnimation('pot-lift-' .. self.player.direction)
 end
 
 function PlayerPotLiftState:enter(params)
 
-    -- restart sword swing sound for rapid swinging
+    -- TODO: Pot lift sound
+    -- add pot lift sound
     gSounds['sword']:stop()
     gSounds['sword']:play()
 
-    -- restart sword swing animation
+    -- restart pot lift animation
     self.player.currentAnimation:refresh()
 end
 
 function PlayerPotLiftState:update(dt)
-    
-    -- check if hitbox collides with any entities in the scene
-    for k, entity in pairs(self.dungeon.currentRoom.entities) do
-        if entity:collides(self.swordHitbox) then
-            entity:damage(1)
-            gSounds['hit-enemy']:play()
-        end
-    end
-
     -- if we've fully elapsed through one cycle of animation, change back to idle state
     if self.player.currentAnimation.timesPlayed > 0 then
         self.player.currentAnimation.timesPlayed = 0
-        self.player:changeState('idle')
-    end
-
-    -- allow us to change into this state afresh if we swing within it, rapid swinging
-    if love.keyboard.wasPressed('space') then
-        self.player:changeState('swing-sword')
+        self.player:changeState('pot-idle')
     end
 end
 
