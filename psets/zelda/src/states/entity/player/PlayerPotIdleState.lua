@@ -31,9 +31,9 @@ function PlayerPotIdleState:update(dt)
     self.dungeon.currentRoom.projectile.x = self.entity.x
     self.dungeon.currentRoom.projectile.y = self.entity.y - 12
 
-    -- TODO: Chuck pot when pressing return
-    -- if love.keyboard.wasPressed('return') then
-    --     self.pot:fire(self.entity.direction, dt)
-    --     self.entity:changeState('walk')
-    -- end
+    -- fire projectile when pressing return
+    if love.keyboard.wasPressed('return') then
+        self.dungeon.currentRoom.projectile:fire(self.entity.direction, dt)
+        self.entity:changeState('walk')
+    end
 end
