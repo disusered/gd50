@@ -10,8 +10,6 @@ PlayerPotIdleState = Class{__includes = EntityIdleState}
 function PlayerPotIdleState:init(entity, dungeon)
     self.entity = entity
     self.dungeon = dungeon
-    self.thrown = false
-    self.pot = GameObject(GAME_OBJECT_DEFS['pot'], self.entity.x, self.entity.y)
 
     EntityIdleState.init(self, entity)
 end
@@ -30,27 +28,12 @@ function PlayerPotIdleState:update(dt)
         self.entity:changeState('pot-walk')
     end
 
-    -- update pot location
-    if self.thrown == false then
-        self.pot.x = self.entity.x
-        self.pot.y = self.entity.y - 12
-    end
+    self.dungeon.currentRoom.projectile.x = self.entity.x
+    self.dungeon.currentRoom.projectile.y = self.entity.y - 12
 
     -- TODO: Chuck pot when pressing return
-    if love.keyboard.wasPressed('return') then
-        self.thrown = true
-        self.pot:fire(self.entity.direction, dt)
-        -- self.entity:changeState('walk')
-    end
-end
-
-function PlayerPotIdleState:render()
-    -- render player entity in pot idle state
-    local anim = self.entity.currentAnimation
-    love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
-        math.floor(self.entity.x - self.entity.offsetX), math.floor(self.entity.y - self.entity.offsetY))
-
-    -- render pot
-    love.graphics.draw(gTextures[self.pot.texture], gFrames[self.pot.texture][self.pot.frame],
-        self.pot.x, self.pot.y)
+    -- if love.keyboard.wasPressed('return') then
+    --     self.pot:fire(self.entity.direction, dt)
+    --     self.entity:changeState('walk')
+    -- end
 end

@@ -33,6 +33,9 @@ function Room:init(player)
     -- reference to player for collisions, etc.
     self.player = player
 
+    -- reference to projectile i.e. the pot
+    self.projectile = nil
+
     -- used for centering the dungeon rendering
     self.renderOffsetX = MAP_RENDER_OFFSET_X
     self.renderOffsetY = MAP_RENDER_OFFSET_Y
@@ -288,6 +291,12 @@ function Room:render()
     end
 
     love.graphics.setStencilTest()
+
+    -- render pot
+    if self.projectile then
+        love.graphics.draw(gTextures[self.projectile.texture], gFrames[self.projectile.texture][self.projectile.frame],
+            self.projectile.x, self.projectile.y)
+    end
 
     --
     -- DEBUG DRAWING OF STENCIL RECTANGLES

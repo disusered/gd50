@@ -10,8 +10,6 @@ PlayerPotWalkState = Class{__includes = BaseState}
 function PlayerPotWalkState:init(player, dungeon)
     self.entity = player
     self.dungeon = dungeon
-    self.thrown = false
-    self.pot = GameObject(GAME_OBJECT_DEFS['pot'], self.entity.x, self.entity.y)
 
     -- render offset for spaced character sprite
     self.entity.offsetY = 5
@@ -39,17 +37,14 @@ function PlayerPotWalkState:update(dt)
     EntityWalkState.update(self, dt)
 
     -- update pot location
-    if self.thrown == false then
-        self.pot.x = self.entity.x
-        self.pot.y = self.entity.y - 12
-    end
+      self.dungeon.currentRoom.projectile.x = self.entity.x
+      self.dungeon.currentRoom.projectile.y = self.entity.y - 12
 
     -- TODO: Chuck pot when pressing return
-    if love.keyboard.wasPressed('return') then
-        self.thrown = true
-        self.pot:fire(self.entity.direction, dt)
-        -- self.entity:changeState('walk')
-    end
+    -- if love.keyboard.wasPressed('return') then
+    --     self.pot:fire(self.entity.direction, dt)
+    --     self.entity:changeState('walk')
+    -- end
 end
 
 function PlayerPotWalkState:render()
@@ -57,19 +52,5 @@ function PlayerPotWalkState:render()
     local anim = self.entity.currentAnimation
     love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
         math.floor(self.entity.x - self.entity.offsetX), math.floor(self.entity.y - self.entity.offsetY))
-
-    -- render pot
-    love.graphics.draw(gTextures[self.pot.texture], gFrames[self.pot.texture][self.pot.frame],
-        self.pot.x, self.pot.y)
-
-    --
-    -- debug for entity and hurtbox collision rects VV
-    --
-
-    -- love.graphics.setColor(255, 0, 255, 255)
-    -- love.graphics.rectangle('line', self.entity.x, self.entity.y, self.entity.width, self.entity.height)
-    -- love.graphics.rectangle('line', self.swordHurtbox.x, self.swordHurtbox.y,
-    --     self.swordHurtbox.width, self.swordHurtbox.height)
-    -- love.graphics.setColor(255, 255, 255, 255)
 end
 
