@@ -251,13 +251,17 @@ function Room:update(dt)
                 self.projectile = nil
             end
         end
+
+        -- after checking for wall collision, if the projectile was destroyed,
+        -- play a sound
+        if not self.projectile then
+            gSounds['destroy-pot']:play()
+        end
     end
 
         -- TODO: check if projectile collides with any entities in the scene
         -- TODO: if projectile collides with enemy, destroy enemy and projectile
-
-        -- NOTE: If possible try to animate when projectile is destroyed
-        -- NOTE: Custom sounds depending on impact?
+        -- TODO: try to animate when projectile is destroyed
 
     for k, object in pairs(self.objects) do
         object:update(dt)
