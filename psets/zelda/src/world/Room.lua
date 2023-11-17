@@ -216,10 +216,19 @@ function Room:update(dt)
     if self.projectile then
         self.projectile:update(dt)
 
-        -- TODO: check if projectile goes further than 4 tiles, if so, destroy it
+        -- check if projectile goes further than 4 tiles, if so, destroy it
+        if self.projectile.startX > 0 or self.projectile.startY > 0 then
+            if math.abs(self.projectile.x - self.projectile.startX) > 4 * TILE_SIZE or
+                math.abs(self.projectile.y - self.projectile.startY) > 4 * TILE_SIZE then
+                self.projectile = nil
+            end
+        end
         -- TODO: check if projectile hits a wall, if so, destroy it
         -- TODO: check if projectile collides with any entities in the scene
         -- TODO: if projectile collides with enemy, destroy enemy and projectile
+
+        -- NOTE: If possible try to animate when projectile is destroyed
+        -- NOTE: Custom sounds depending on impact?
     end
 
     for k, object in pairs(self.objects) do
