@@ -116,6 +116,7 @@ function Room:generateObjects()
                   VIRTUAL_WIDTH - TILE_SIZE * 2 - 16),
             math.random(MAP_RENDER_OFFSET_Y + TILE_SIZE,
                   VIRTUAL_HEIGHT - (VIRTUAL_HEIGHT - MAP_HEIGHT * TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 16))
+        pot.projectile = true
         table.insert(self.objects, pot)
     end
 end
@@ -209,6 +210,11 @@ function Room:update(dt)
             table.insert(self.objects, heart)
             entity.hasHeart = false
         end
+    end
+
+    -- update projectile, if set
+    if self.projectile then
+      self.projectile:update(dt)
     end
 
     for k, object in pairs(self.objects) do

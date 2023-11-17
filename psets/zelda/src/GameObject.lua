@@ -29,6 +29,11 @@ function GameObject:init(def, x, y)
     self.width = def.width
     self.height = def.height
 
+    -- movement parameters
+    self.projectile = false
+    self.dx = 0
+    self.dy = 0
+
     -- default empty collision callback
     self.onCollide = function() end
 
@@ -37,7 +42,10 @@ function GameObject:init(def, x, y)
 end
 
 function GameObject:update(dt)
-
+    if self.projectile then
+      self.x = self.x + self.dx * dt
+      self.y = self.y + self.dy * dt
+    end
 end
 
 function GameObject:render(adjacentOffsetX, adjacentOffsetY)
@@ -45,15 +53,14 @@ function GameObject:render(adjacentOffsetX, adjacentOffsetY)
         self.x + adjacentOffsetX, self.y + adjacentOffsetY)
 end
 
--- TODO: Move relative to dt
-function GameObject:fire(direction, dt)
+function GameObject:fire(direction)
     if direction == 'left' then
-        self.x = self.x - 50
+        self.dx = -100
     elseif direction == 'right' then
-        self.x = self.x + 50
+        self.dx = 100
     elseif direction == 'up' then
-        self.y = self.y - 50
+        self.dy = -100
     elseif direction == 'down' then
-        self.y = self.y + 50
+        self.dy = 100
     end
 end
