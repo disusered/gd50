@@ -215,21 +215,49 @@ function Room:update(dt)
     -- update projectile, if set
     if self.projectile then
         self.projectile:update(dt)
+    end
 
-        -- check if projectile goes further than 4 tiles, if so, destroy it
+    -- check if projectile goes further than 4 tiles, if so, destroy it
+    if self.projectile then
         if self.projectile.startX > 0 or self.projectile.startY > 0 then
             if math.abs(self.projectile.x - self.projectile.startX) > 4 * TILE_SIZE or
                 math.abs(self.projectile.y - self.projectile.startY) > 4 * TILE_SIZE then
                 self.projectile = nil
             end
         end
-        -- TODO: check if projectile hits a wall, if so, destroy it
+    end
+
+
+    -- check if projectile hits the wall, if so, destroy it. adapted from the
+    -- wall collision code in entity walk state
+    if self.projectile then
+        if self.player.direction == 'left' then
+            if self.projectile.x <= MAP_RENDER_OFFSET_X + TILE_SIZE - self.projectile.width / 2 then
+                self.projectile = nil
+            end
+        elseif self.player.direction == 'right' then
+            if self.projectile.x + self.player.width >= VIRTUAL_WIDTH - TILE_SIZE * 2 + self.projectile.width / 2 then
+                self.projectile = nil
+            end
+        elseif self.player.direction == 'up' then
+            if self.projectile.y <= MAP_RENDER_OFFSET_Y + TILE_SIZE - self.player.height / 2 - self.projectile.height / 2 then
+                self.projectile = nil
+            end
+        elseif self.player.direction == 'down' then
+            local bottomEdge = VIRTUAL_HEIGHT - (VIRTUAL_HEIGHT - MAP_HEIGHT * TILE_SIZE) + self.projectile.height / 2
+                + MAP_RENDER_OFFSET_Y - TILE_SIZE
+
+            if self.projectile.y + self.player.height >= bottomEdge then
+                self.projectile = nil
+            end
+        end
+    end
+
         -- TODO: check if projectile collides with any entities in the scene
         -- TODO: if projectile collides with enemy, destroy enemy and projectile
 
         -- NOTE: If possible try to animate when projectile is destroyed
         -- NOTE: Custom sounds depending on impact?
-    end
 
     for k, object in pairs(self.objects) do
         object:update(dt)
