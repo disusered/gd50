@@ -259,8 +259,16 @@ function Room:update(dt)
         end
     end
 
-    -- TODO: check if projectile collides with any entities in the scene
-    -- TODO: if projectile collides with enemy, destroy enemy and projectile
+    -- check if projectile collides with any entities in the scene
+    for k, entity in pairs(self.entities) do
+        if self.projectile and not entity.dead and entity:collides(self.projectile) then
+            entity:damage(1)
+            gSounds['hit-enemy']:play()
+            -- TODO: Remove when it hits an enemy
+            -- self.projectile = nil
+        end
+    end
+
     -- TODO: try to animate when projectile is destroyed
 
     for k, object in pairs(self.objects) do
