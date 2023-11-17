@@ -34,6 +34,8 @@ function PlayerPotIdleState:update(dt)
     -- fire projectile when pressing return
     if love.keyboard.wasPressed('return') then
         self.dungeon.currentRoom.projectile:fire(self.entity.direction)
+        self.dungeon.currentRoom.projectile.startX = self.entity.x
+        self.dungeon.currentRoom.projectile.startY = self.entity.y
         self.entity:changeState('walk')
     end
 end

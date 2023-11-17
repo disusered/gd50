@@ -214,7 +214,12 @@ function Room:update(dt)
 
     -- update projectile, if set
     if self.projectile then
-      self.projectile:update(dt)
+        self.projectile:update(dt)
+
+        -- TODO: check if projectile goes further than 4 tiles, if so, destroy it
+        -- TODO: check if projectile hits a wall, if so, destroy it
+        -- TODO: check if projectile collides with any entities in the scene
+        -- TODO: if projectile collides with enemy, destroy enemy and projectile
     end
 
     for k, object in pairs(self.objects) do

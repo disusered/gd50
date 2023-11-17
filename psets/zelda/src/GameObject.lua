@@ -34,6 +34,11 @@ function GameObject:init(def, x, y)
     self.dx = 0
     self.dy = 0
 
+    -- starting location when thrown if values are 0, 0, projectile has not
+    -- been thrown yet
+    self.startX = 0
+    self.startY = 0
+
     -- default empty collision callback
     self.onCollide = function() end
 
