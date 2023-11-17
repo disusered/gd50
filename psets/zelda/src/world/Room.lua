@@ -262,10 +262,16 @@ function Room:update(dt)
     -- check if projectile collides with any entities in the scene
     for k, entity in pairs(self.entities) do
         if self.projectile and not entity.dead and entity:collides(self.projectile) then
+            -- damage the enemy and play sound
             entity:damage(1)
             gSounds['hit-enemy']:play()
-            -- TODO: Remove when it hits an enemy
-            -- self.projectile = nil
+            gSounds['destroy-pot']:play()
+
+            -- change out of player pot states since we'll be removing the pot
+            self.player:changeState('idle')
+
+            -- remove the pot
+            self.projectile = nil
         end
     end
 
