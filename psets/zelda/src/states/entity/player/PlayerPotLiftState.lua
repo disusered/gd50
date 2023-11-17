@@ -20,11 +20,7 @@ function PlayerPotLiftState:init(player, dungeon)
 end
 
 function PlayerPotLiftState:enter(params)
-
-    -- TODO: Pot lift sound
-    -- add pot lift sound
-    gSounds['sword']:stop()
-    gSounds['sword']:play()
+    gSounds['lift-pot']:play()
 
     -- restart pot lift animation
     self.player.currentAnimation:refresh()

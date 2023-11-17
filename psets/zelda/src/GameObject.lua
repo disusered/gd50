@@ -54,6 +54,7 @@ function GameObject:render(adjacentOffsetX, adjacentOffsetY)
 end
 
 function GameObject:fire(direction)
+    gSounds['throw-pot']:play()
     if direction == 'left' then
         self.dx = -100
     elseif direction == 'right' then
