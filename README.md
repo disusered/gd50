@@ -49,6 +49,12 @@ cd psets/pong
 submit50 games50/projects/2018/x/pong
 ```
 
+If it's failing, try disabling GPG signing prior to running `submit50`:
+
+```sh
+git config --global commit.gpgsign false
+```
+
 ### Finishing the assignment
 
 Unlike CS50 there is no automated grading mechanism, so be sure to following the problem set instructions and submit the form and any other requirements needed. Once finished, grading can take up to three weeks to grade.
@@ -65,13 +71,13 @@ Despite the course ending in June 2024, the gradebook will reset on January 9, s
 - [x] Week 3: Breakout - Oct 15 - Oct 21
 - [x] Week 4: Match-3 - Oct 22 - Oct 28
 - [x] Week 5: Mario - Oct 29 - Nov 4
-- [ ] Week 6: Zelda - Nov 5 - Nov 11
-- [ ] Week 7: Angry Birds - Nov 12 - Nov 18
-- [ ] Week 8: Pokemon - Nov 19 - Nov 25
-- [ ] Week 9: Helicopter - Nov 26 - Dec 2
-- [ ] Week 10: Dreadhalls - Dec 3 - Dec 9
-- [ ] Week 11: Portal - Dec 10 - Dec 16
-- [ ] Week 12: Final Project - Dec 17 - Jan 8
+- [-] Week 6: Zelda - Nov 5 - Nov 18
+- [ ] Week 7: Angry Birds - Nov 19 - Nov 25
+- [ ] Week 8: Pokemon - Nov 26 - Dec 2
+- [ ] Week 9: Helicopter - Dec 3 - Dec 9
+- [ ] Week 10: Dreadhalls - Dec 10 - Dec 16
+- [ ] Week 11: Portal - Dec 17 - Dec 23
+- [ ] Week 12: Final Project - Dec 24 - Jan 8
 
 ## Additional Tools
 
