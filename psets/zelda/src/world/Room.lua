@@ -162,7 +162,19 @@ function Room:generateWallsAndFloors()
 end
 
 function Room:update(dt)
-    
+
+    -- helper function to remove pot
+    local function removePot()
+        -- change object state to broken
+        self.projectile.frame = self.projectile.states['broken'].frame
+
+        -- remove the pot after a short delay
+        Timer.after(0.1, function()
+            self.projectile = nil
+            gSounds['destroy-pot']:play()
+        end)
+    end
+
     -- don't update anything if we are sliding to another room (we have offsets)
     if self.adjacentOffsetX ~= 0 or self.adjacentOffsetY ~= 0 then return end
 
@@ -222,7 +234,7 @@ function Room:update(dt)
         if self.projectile.startX > 0 or self.projectile.startY > 0 then
             if math.abs(self.projectile.x - self.projectile.startX) > 4 * TILE_SIZE or
                 math.abs(self.projectile.y - self.projectile.startY) > 4 * TILE_SIZE then
-                self.projectile = nil
+                removePot()
             end
         end
     end
@@ -233,29 +245,23 @@ function Room:update(dt)
     if self.projectile then
         if self.player.direction == 'left' then
             if self.projectile.x <= MAP_RENDER_OFFSET_X + TILE_SIZE - self.projectile.width / 2 then
-                self.projectile = nil
+                removePot()
             end
         elseif self.player.direction == 'right' then
             if self.projectile.x + self.player.width >= VIRTUAL_WIDTH - TILE_SIZE * 2 + self.projectile.width / 2 then
-                self.projectile = nil
+                removePot()
             end
         elseif self.player.direction == 'up' then
             if self.projectile.y <= MAP_RENDER_OFFSET_Y + TILE_SIZE - self.player.height / 2 - self.projectile.height / 2 then
-                self.projectile = nil
+                removePot()
             end
         elseif self.player.direction == 'down' then
             local bottomEdge = VIRTUAL_HEIGHT - (VIRTUAL_HEIGHT - MAP_HEIGHT * TILE_SIZE) + self.projectile.height / 2
                 + MAP_RENDER_OFFSET_Y - TILE_SIZE
 
             if self.projectile.y + self.player.height >= bottomEdge then
-                self.projectile = nil
+                removePot()
             end
-        end
-
-        -- after checking for wall collision, if the projectile was destroyed,
-        -- play a sound
-        if not self.projectile then
-            gSounds['destroy-pot']:play()
         end
     end
 
@@ -271,11 +277,9 @@ function Room:update(dt)
             self.player:changeState('idle')
 
             -- remove the pot
-            self.projectile = nil
+            removePot()
         end
     end
-
-    -- TODO: try to animate when projectile is destroyed
 
     for k, object in pairs(self.objects) do
         object:update(dt)
