@@ -30,10 +30,13 @@ function AlienLaunchMarker:init(world)
 end
 
 function AlienLaunchMarker:update(dt)
-    
+    -- if we've launched, listen for keyboard input to split the alien
+    if self.launched then
+        if love.keyboard.wasPressed('space') then
+            print("split")
+        end
     -- perform everything here as long as we haven't launched yet
-    if not self.launched then
-
+    else
         -- grab mouse coordinates
         local x, y = push:toGame(love.mouse.getPosition())
         
