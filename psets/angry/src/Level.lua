@@ -25,6 +25,11 @@ function Level:init()
         types[a:getUserData()] = true
         types[b:getUserData()] = true
 
+        -- if we have any collisions involving the player
+        if types['Player'] then
+            print('player collision')
+        end
+
         -- if we collided between both the player and an obstacle...
         if types['Obstacle'] and types['Player'] then
 
