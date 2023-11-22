@@ -27,7 +27,11 @@ function Level:init()
 
         -- if we have any collisions involving the player
         if types['Player'] then
-            print('player collision')
+            -- mark the player alien as collided to prevent player from spawning
+            -- additional aliens
+            if self.launchMarker.launched then
+                self.launchMarker.collided = true
+            end
         end
 
         -- if we collided between both the player and an obstacle...

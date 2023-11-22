@@ -27,13 +27,19 @@ function AlienLaunchMarker:init(world)
 
     -- our alien we will eventually spawn
     self.alien = nil
+
+    -- whether the alien collided with something in the world
+    self.collided = false
 end
 
 function AlienLaunchMarker:update(dt)
     -- if we've launched, listen for keyboard input to split the alien
     if self.launched then
         if love.keyboard.wasPressed('space') then
-            print("split")
+            if not self.collided then
+                -- self.alien:split()
+                print("split")
+            end
         end
     -- perform everything here as long as we haven't launched yet
     else
