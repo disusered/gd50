@@ -36,6 +36,7 @@ function AlienLaunchMarker:update(dt)
     -- if we've launched, listen for keyboard input to split the alien
     if self.launched then
         if love.keyboard.wasPressed('space') then
+            -- if we haven't collided yet, and there is only one alien, split the alien
             if not self.collided then
                 -- spawn two new aliens
                 for i = 1, 2 do
@@ -46,17 +47,16 @@ function AlienLaunchMarker:update(dt)
                         self.aliens[1].body:getY(),
                         'Player')
 
-                    -- apply the difference between current X,Y and base X,Y as launch vector impulse
-                    alien.body:setLinearVelocity((self.baseX - self.shiftedX) * 10, (self.baseY - self.shiftedY) * 10)
-
                     -- make the alien pretty bouncy
                     alien.fixture:setRestitution(0.4)
                     alien.body:setAngularDamping(1)
                     table.insert(self.aliens, alien)
                 end
 
-                -- TODO: only allow splitting once
-                print("split")
+                -- Make one alien go higher than alien[1], the other lower
+                local x, y = self.aliens[1].body:getLinearVelocity()
+                self.aliens[2].body:setLinearVelocity(x, y + 50)
+                self.aliens[3].body:setLinearVelocity(x, y - 50)
             end
         end
     -- perform everything here as long as we haven't launched yet
