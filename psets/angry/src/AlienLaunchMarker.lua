@@ -26,7 +26,7 @@ function AlienLaunchMarker:init(world)
     self.launched = false
 
     -- our alien we will eventually spawn
-    self.alien = nil
+    self.aliens = {}
 
     -- whether the alien collided with something in the world
     self.collided = false
@@ -37,6 +37,8 @@ function AlienLaunchMarker:update(dt)
     if self.launched then
         if love.keyboard.wasPressed('space') then
             if not self.collided then
+                -- TODO: split alien
+                -- TODO: only allow splitting once
                 -- self.alien:split()
                 print("split")
             end
@@ -55,14 +57,15 @@ function AlienLaunchMarker:update(dt)
             self.launched = true
 
             -- spawn new alien in the world, passing in user data of player
-            self.alien = Alien(self.world, 'round', self.shiftedX, self.shiftedY, 'Player')
+            local alien = Alien(self.world, 'round', self.shiftedX, self.shiftedY, 'Player')
+            table.insert(self.aliens, alien)
 
             -- apply the difference between current X,Y and base X,Y as launch vector impulse
-            self.alien.body:setLinearVelocity((self.baseX - self.shiftedX) * 10, (self.baseY - self.shiftedY) * 10)
+            self.aliens[1].body:setLinearVelocity((self.baseX - self.shiftedX) * 10, (self.baseY - self.shiftedY) * 10)
 
             -- make the alien pretty bouncy
-            self.alien.fixture:setRestitution(0.4)
-            self.alien.body:setAngularDamping(1)
+            self.aliens[1].fixture:setRestitution(0.4)
+            self.aliens[1].body:setAngularDamping(1)
 
             -- we're no longer aiming
             self.aiming = false
@@ -112,6 +115,9 @@ function AlienLaunchMarker:render()
         
         love.graphics.setColor(1, 1, 1, 1)
     else
-        self.alien:render()
+        -- render all aliens
+        for k, alien in pairs(self.aliens) do
+            alien:render()
+        end
     end
 end
