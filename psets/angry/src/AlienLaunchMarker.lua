@@ -39,7 +39,12 @@ function AlienLaunchMarker:update(dt)
             if not self.collided then
                 -- spawn two new aliens
                 for i = 1, 2 do
-                    local alien = Alien(self.world, 'round', self.shiftedX, self.shiftedY, 'Player')
+                    local alien = Alien(
+                        self.world,
+                        'round',
+                        self.aliens[1].body:getX(),
+                        self.aliens[1].body:getY(),
+                        'Player')
 
                     -- apply the difference between current X,Y and base X,Y as launch vector impulse
                     alien.body:setLinearVelocity((self.baseX - self.shiftedX) * 10, (self.baseY - self.shiftedY) * 10)
