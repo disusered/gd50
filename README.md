@@ -27,13 +27,13 @@ The tool runs in Python, I don't want to install it globally so I want to use a 
 
 ```sh
 # Create virtual environment (only needed when pulling the repo for the first time)
-python3 -m psets/env
+python3 -m venv env
 
 # Activate the virtual environment
-source psets/env/bin/activate
+source env/bin/activate
 
 # Install `submit50` (only needed on first pull)
-pip3 install submit50
+pip3 install --upgrade submit50
 ```
 
 ### Using the submit50 tool
@@ -72,7 +72,7 @@ Despite the course ending in June 2024, the gradebook will reset on January 9, s
 - [x] Week 4: Match-3 - Oct 22 - Oct 28
 - [x] Week 5: Mario - Oct 29 - Nov 4
 - [-] Week 6: Zelda - Nov 5 - Nov 18
-- [ ] Week 7: Angry Birds - Nov 19 - Nov 25
+- [-] Week 7: Angry Birds - Nov 19 - Nov 25
 - [ ] Week 8: Pokemon - Nov 26 - Dec 2
 - [ ] Week 9: Helicopter - Dec 3 - Dec 9
 - [ ] Week 10: Dreadhalls - Dec 10 - Dec 16
