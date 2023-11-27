@@ -35,9 +35,13 @@ end
 function AlienLaunchMarker:update(dt)
     -- if we've launched, listen for keyboard input to split the alien
     if self.launched then
+        -- count the number of aliens in the world
+        local count = 0
+        for _ in pairs(self.aliens) do count = count + 1 end
+
         if love.keyboard.wasPressed('space') then
             -- if we haven't collided yet, and there is only one alien, split the alien
-            if not self.collided then
+            if not self.collided and count == 1 then
                 -- spawn two new aliens
                 for i = 1, 2 do
                     local alien = Alien(
