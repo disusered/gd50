@@ -8,7 +8,10 @@
 
 LevelUpState = Class{__includes = BaseState}
 
-function LevelUpState:init()
+function LevelUpState:init(baseStats, increasedStats)
+    self.baseStats = baseStats
+    self.increasedStats = increasedStats
+
     local fadeOutWhite = function()
         -- pop off level up menu
         gStateStack:pop()
@@ -30,7 +33,7 @@ function LevelUpState:init()
         end))
     end
 
-    local width = 196
+    local width = 176
     local height = 96
 
     self.levelUpMenu = Menu {
@@ -40,10 +43,10 @@ function LevelUpState:init()
         height = height,
         interactive = false,
         items = {
-            { text = 'HP: ', onSelect = fadeOutWhite },
-            { text = 'Attack: '},
-            { text = 'Defense: '},
-            { text = 'Speed: '},
+            { text = 'HP: ' .. self.baseStats.HP .. " + " .. self.increasedStats.HP .. " = " .. self.baseStats.HP + self.increasedStats.HP, onSelect = fadeOutWhite },
+            { text = 'Attack: ' .. self.baseStats.attack .. " + " .. self.increasedStats.attack .. " = " .. self.baseStats.attack + self.increasedStats.attack, onSelect = fadeOutWhite },
+            { text = 'Defense: ' .. self.baseStats.defense .. " + " .. self.increasedStats.defense .. " = " .. self.baseStats.defense + self.increasedStats.defense, onSelect = fadeOutWhite },
+            { text = 'Speed: ' .. self.baseStats.speed .. " + " .. self.increasedStats.speed .. " = " .. self.baseStats.speed + self.increasedStats.speed, onSelect = fadeOutWhite },
         }
     }
 end
