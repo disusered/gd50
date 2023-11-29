@@ -38,11 +38,12 @@ function LevelUpState:init()
         y = VIRTUAL_HEIGHT - height,
         width = width,
         height = height,
+        interactive = false,
         items = {
             { text = 'HP: ', onSelect = fadeOutWhite },
-            { text = 'Attack: ', onSelect = fadeOutWhite },
-            { text = 'Defense: ', onSelect = fadeOutWhite },
-            { text = 'Speed: ', onSelect = fadeOutWhite },
+            { text = 'Attack: '},
+            { text = 'Defense: '},
+            { text = 'Speed: '},
         }
     }
 end
