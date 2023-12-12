@@ -73,8 +73,8 @@ Despite the course ending in June 2024, the gradebook will reset on January 9, s
 - [x] Week 5: Mario - Oct 29 - Nov 4
 - [x] Week 6: Zelda - Nov 5 - Nov 18
 - [x] Week 7: Angry Birds - Nov 19 - Nov 25
-- [-] Week 8: Pokemon - Nov 26 - Dec 2
-- [ ] Week 9: Helicopter - Dec 3 - Dec 9
+- [x] Week 8: Pokemon - Nov 26 - Dec 2
+- [-] Week 9: Helicopter - Dec 3 - Dec 9
 - [ ] Week 10: Dreadhalls - Dec 10 - Dec 16
 - [ ] Week 11: Portal - Dec 17 - Dec 23
 - [ ] Week 12: Final Project - Dec 24 - Jan 8
