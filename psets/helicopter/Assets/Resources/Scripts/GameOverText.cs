@@ -33,6 +33,9 @@ public class GameOverText : MonoBehaviour {
 
 				// reload entire scene, starting music over again, refreshing score, etc.
 				SceneManager.LoadScene("Main");
+
+        // reset skyscraper speed
+        SkyscraperSpawner.speed = 10f;
 			}
 		}
 	}
