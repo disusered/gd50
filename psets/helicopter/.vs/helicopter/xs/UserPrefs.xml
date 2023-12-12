@@ -1,7 +1,8 @@
 ﻿<Properties StartupConfiguration="{8F20FC21-1FAE-D07E-6564-5EEADC57DBBF}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Resources/Scripts/Airplane.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Resources/Scripts/Coin.cs">
     <Files>
-      <File FileName="Assets/Resources/Scripts/Airplane.cs" Line="24" Column="18" />
+      <File FileName="Assets/Resources/Scripts/Coin.cs" Line="28" Column="1" />
+      <File FileName="Assets/Gem.cs" Line="23" Column="42" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -9,8 +10,9 @@
           <Node name="helicopter" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Resources" expanded="True">
-                <Node name="Models" selected="True" />
-                <Node name="Scripts" expanded="True" />
+                <Node name="Scripts" expanded="True">
+                  <Node name="Coin.cs" selected="True" />
+                </Node>
               </Node>
             </Node>
           </Node>
@@ -20,7 +22,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="45be9f8f-8064-4fb4-9fb0-f666d6338d8c" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="b5cd65e8-f76f-4586-bf22-98646bb1b414" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
