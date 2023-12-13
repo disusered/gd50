@@ -24,6 +24,12 @@ public class LevelGenerator : MonoBehaviour {
 	// spawns at the end of the maze generation
 	public GameObject pickup;
 
+  // maximum number of holes we want to have in our maze
+  private int maxHoles = 4;
+
+  // current number of holes in our maze
+  private int currentHoles = 0;
+
 	// this will determine whether we've placed the character controller
 	private bool characterPlaced = false;
 
@@ -57,9 +63,14 @@ public class LevelGenerator : MonoBehaviour {
 					characterPlaced = true;
 				}
 
-				// create floor and ceiling
-				CreateChildPrefab(floorPrefab, floorParent, x, 0, z);
+				// create floor with holes (5% chance of hole, up to maxHoles)
+        if (currentHoles < maxHoles && Random.Range(0, 100) < 5) {
+          currentHoles++;
+        } else {
+          CreateChildPrefab(floorPrefab, floorParent, x, 0, z);
+        }
 
+        // create ceiling
 				if (generateRoof) {
 					CreateChildPrefab(ceilingPrefab, wallsParent, x, 4, z);
 				}
