@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class DespawnOnHeight : MonoBehaviour
 {
+
+    public GameObject whisper;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +20,7 @@ public class DespawnOnHeight : MonoBehaviour
         if (transform.position.y < -1)
         {
             SceneManager.LoadScene("GameOver");
-            /* TODO: Stop whispers */
+            Destroy(whisper);
         }
     }
 }

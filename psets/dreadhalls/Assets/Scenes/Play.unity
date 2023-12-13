@@ -482,6 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0687b125c24e744a2950854af385bf1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whisper: {fileID: 748641241}
 --- !u!114 &1286802630
 MonoBehaviour:
   m_ObjectHideFlags: 0
