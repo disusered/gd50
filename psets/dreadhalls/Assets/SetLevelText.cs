@@ -1,23 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class LoadTitleSceneOnInput : MonoBehaviour
+public class SetLevelText : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-
+        GetComponent<UnityEngine.UI.Text>().text = "Level " + PlayerLevel.level;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("Submit") == 1)
-        {
-            SceneManager.LoadScene("Title");
-            PlayerLevel.level = 1;
-        }
+
     }
 }

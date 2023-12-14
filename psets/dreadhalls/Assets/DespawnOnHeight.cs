@@ -21,6 +21,7 @@ public class DespawnOnHeight : MonoBehaviour
         {
             SceneManager.LoadScene("GameOver");
             Destroy(whisper);
+            PlayerLevel.level = 0;
         }
     }
 }
