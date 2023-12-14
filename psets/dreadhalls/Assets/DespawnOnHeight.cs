@@ -19,8 +19,8 @@ public class DespawnOnHeight : MonoBehaviour
         // Go to game over scene when the player falls below the map
         if (transform.position.y < -1)
         {
-            SceneManager.LoadScene("GameOver");
             Destroy(whisper);
+            SceneManager.LoadScene("GameOver");
             PlayerLevel.level = 0;
         }
     }

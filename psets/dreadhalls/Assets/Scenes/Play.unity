@@ -179,7 +179,7 @@ MonoBehaviour:
   characterController: {fileID: 1286802624}
   floorParent: {fileID: 328187320}
   wallsParent: {fileID: 1229837569}
-  generateRoof: 0
+  generateRoof: 1
   tilesToRemove: 350
   mazeSize: 30
   pickup: {fileID: 100000, guid: be400c8265d9c4977800d48e9650f26e, type: 3}
@@ -507,6 +507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28dcece8f24734b5aa46e98c0547fecd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whisper: {fileID: 748641241}
 --- !u!1 &1347426807
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,7 +558,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eaeeed74e81044bf8e7801132ea4707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1286802624}
 --- !u!114 &1347426810
 MonoBehaviour:
   m_ObjectHideFlags: 0

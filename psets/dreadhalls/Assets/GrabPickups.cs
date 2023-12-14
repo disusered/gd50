@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GrabPickups : MonoBehaviour {
 
+  public GameObject whisper;
+
 	private AudioSource pickupSoundSource;
 
 	void Awake() {
@@ -14,6 +16,7 @@ public class GrabPickups : MonoBehaviour {
 	void OnControllerColliderHit(ControllerColliderHit hit) {
 		if (hit.gameObject.tag == "Pickup") {
 			pickupSoundSource.Play();
+      Destroy(whisper);
 			SceneManager.LoadScene("Play");
       PlayerLevel.level = PlayerLevel.level + 1;
 		}
