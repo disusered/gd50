@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Gem spawning script */
 public class GemSpawner : MonoBehaviour
 {
 
